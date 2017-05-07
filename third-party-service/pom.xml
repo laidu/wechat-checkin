@@ -9,8 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>third-party-api</artifactId>
+    <artifactId>third-party-service</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>wechat</module>
     </modules>

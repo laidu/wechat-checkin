@@ -12,7 +12,7 @@
         <module>common-utils</module>
         <module>common-tools</module>
         <module>application-web</module>
-        <module>third-party-api</module>
+        <module>third-party-service</module>
     </modules>
 
 
