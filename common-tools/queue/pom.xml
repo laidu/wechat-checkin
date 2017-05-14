@@ -10,11 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>queue</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>rabbitmq</module>
-        <module>activemq</module>
-    </modules>
 
 
 </project>

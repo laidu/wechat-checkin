@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/Users/laidu/.m2/repository/org/postgresql/postgresql/42.0.0/postgresql-42.0.0.jar"></classPathEntry>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection connectionURL="jdbc:postgresql://localhost:5432/wechat_checkin"
+                        driverClass="org.postgresql.Driver" password="123456" userId="postgres"/>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.laidu.bishe.wechat.domain"
+                            targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="/"
+                         targetProject="src/main/resources/mapperXml/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.laidu.bishe.wechat.mapper"
+                             targetProject="src/main/java/" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="checkinDetailInfo" domainObjectName="CheckinDetailInfo"
+               delimitIdentifiers="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" delimitAllColumns="true">
+        </table>
+        <table tableName="courseInfo" domainObjectName="CourseInfo"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="seqInfo" domainObjectName="SeqInfo"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="studentInfo" domainObjectName="StudentInfo"
+               delimitIdentifiers="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <columnOverride column="stuID" delimitedColumnName="true" />
+        </table>
+        <table tableName="teacherInfo" domainObjectName="TeacherInfo"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+    </context>
+</generatorConfiguration>

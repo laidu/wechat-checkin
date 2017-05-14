@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>redisson</module>
-        <module>queue</module>
         <module>mybatis</module>
         <module>zookeeper</module>
+        <module>logger</module>
     </modules>
 
     <dependencies>

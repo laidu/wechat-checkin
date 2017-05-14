@@ -11,5 +11,24 @@
 
     <artifactId>checkin-wechat</artifactId>
 
+    <properties>
+        <weixin-java-mp.version>2.6.0</weixin-java-mp.version>
+    </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>${weixin-java-mp.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

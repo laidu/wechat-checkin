@@ -15,9 +15,12 @@
         <jackson.version>2.9.0.pr3</jackson.version>
         <fastjson.version>1.2.31</fastjson.version>
         <common-lang3.version>3.5</common-lang3.version>
+        <commons-csv.version>1.4</commons-csv.version>
+        <poi.verison>3.16</poi.verison>
     </properties>
 
     <dependencies>
+
         <!--json-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -35,10 +38,25 @@
             <version>${jackson.version}</version>
         </dependency>
 
+         <!--String处理-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${common-lang3.version}</version>
+        </dependency>
+
+        <!--CSV文件处理-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>${commons-csv.version}</version>
+        </dependency>
+
+        <!--excel处理-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.verison}</version>
         </dependency>
 
     </dependencies>
