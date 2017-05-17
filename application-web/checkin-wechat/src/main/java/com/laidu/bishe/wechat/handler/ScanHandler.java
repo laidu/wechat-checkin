@@ -1,5 +1,6 @@
 package com.laidu.bishe.wechat.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author Binary Wang
  *
  */
+@Slf4j
 @Component
 public class ScanHandler extends AbstractHandler {
 

@@ -1,15 +1,22 @@
 package com.laidu.bishe.utils.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.*;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DateFormat;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +32,24 @@ public class JacksonUtil {
     public static <T> T jsonToObj(String json, Class<T> type) {
         try {
             ObjectMapper e = new ObjectMapper();
+            e.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            return e.readValue(json, type);
+        } catch (JsonParseException var3) {
+            log.error("the json conversion errors", var3);
+            return null;
+        } catch (JsonMappingException var4) {
+            log.error("the json conversion errors", var4);
+            return null;
+        } catch (IOException var5) {
+            log.error("the data stream error", var5);
+            return null;
+        }
+    }
+
+    public static <T> T jsonByLowerCaseWithUndersorcesToObj(String json, Class<T> type) {
+        try {
+            ObjectMapper e = new ObjectMapper();
+            e.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
             e.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return e.readValue(json, type);
         } catch (JsonParseException var3) {
@@ -55,6 +80,28 @@ public class JacksonUtil {
         }
     }
 
+    public static String objToJsonByFasterXml(Object object){
+        com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        try {
+            return object == null ? null : objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.error("the json conversion errors", e);
+            return null;
+        }
+    }
+
+    public static <T> T jsonToObjByFasterXml(String json, Class<T> type){
+        try {
+            com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            return objectMapper.readValue(json, type);
+        } catch (IOException e) {
+            log.error("the data stream error", e);
+            return null;
+        }
+    }
+
     public static String objToJson(Object obj, DateFormat df) {
         try {
             ObjectMapper e = new ObjectMapper();
@@ -72,24 +119,6 @@ public class JacksonUtil {
         }
     }
 
-    public static String objToJsonWithLowerCaseWithUndersorces(Object obj) {
-        try {
-            ObjectMapper e = new ObjectMapper();
-            e.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-            e.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-            return obj == null?"\"\"":e.writeValueAsString(obj);
-        } catch (JsonGenerationException var2) {
-            log.error("the json conversion errors", var2);
-            return null;
-        } catch (JsonMappingException var3) {
-            log.error("the json conversion errors", var3);
-            return null;
-        } catch (IOException var4) {
-            log.error("the data stream error", var4);
-            return null;
-        }
-    }
-
     public static JSONObject objToJSONObject(Object object) {
         return (JSONObject)jsonToObj(objToJson(object), JSONObject.class);
     }
@@ -97,7 +126,7 @@ public class JacksonUtil {
     public static String objTOJsonWithTimeStamp(Object obj) {
         try {
             ObjectMapper e = new ObjectMapper();
-            e.configure(SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
+            e.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
             return obj == null?"\"\"":e.writeValueAsString(obj);
         } catch (JsonGenerationException var2) {
             log.error("the json conversion errors", var2);
@@ -114,7 +143,7 @@ public class JacksonUtil {
     public static <T> T jsonToObjWithTimeStamp(String json, Class<T> type) {
         try {
             ObjectMapper e = new ObjectMapper();
-            e.configure(SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
+            e.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
             e.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return e.readValue(json, type);
         } catch (JsonParseException var3) {
@@ -175,11 +204,22 @@ public class JacksonUtil {
         }
     }
 
+    public static Map<String, Object> objectToMap(Object json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.readValue(JSON.toJSONString(json), Map.class);
+        } catch (IOException var3) {
+            log.error("Cannot parse json to map.", var3);
+            return new HashMap<>();
+        }
+    }
+
     public static Map jsonToObjectMap(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            return objectMapper.readValue(json, Map.class);
+            return (Map)objectMapper.readValue(json, Map.class);
         } catch (IOException var3) {
             log.error("Cannot parse json to map.", var3);
             return null;

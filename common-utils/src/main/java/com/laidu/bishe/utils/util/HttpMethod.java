@@ -7,11 +7,11 @@ public class HttpMethod {
     public HttpMethod() {
     }
 
-    public static String getString(HTTP_METHOD method) {
+    public static String getString(HttpMethod.HTTP_METHOD method) {
         return method.getString();
     }
 
-    public static enum HTTP_METHOD implements IBaseEnum {
+    public static enum HTTP_METHOD implements HttpMethod.IBaseEnum {
         HTTP_GET("GET"),
         HTTP_HEADER("HEADER"),
         HTTP_POST("POST"),

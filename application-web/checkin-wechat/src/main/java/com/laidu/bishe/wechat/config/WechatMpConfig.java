@@ -3,11 +3,10 @@ package com.laidu.bishe.wechat.config;
 import com.laidu.bishe.wechat.handler.*;
 import lombok.Getter;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
-import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.api.impl.WxMpMenuServiceImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpUserTagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -37,16 +36,11 @@ public class WechatMpConfig {
     private MsgHandler msgHandler;
 
     @Autowired@Getter
-    protected LogHandler logHandler;
-
-    @Autowired@Getter
     protected NullHandler nullHandler;
 
     @Autowired@Getter
     protected KfSessionHandler kfSessionHandler;
 
-    @Autowired@Getter
-    protected StoreCheckNotifyHandler storeCheckNotifyHandler;
 
     @Autowired@Getter
     private UnsubscribeHandler unsubscribeHandler;
@@ -74,14 +68,28 @@ public class WechatMpConfig {
     public WxMpService wxMpService(WxMpConfigStorage configStorage) {
         WxMpService wxMpService = new WxMpServiceImpl();
         wxMpService.setWxMpConfigStorage(configStorage);
+
         return wxMpService;
     }
 
     @Bean
+    @ConditionalOnMissingBean
+    public WxMpUserTagService wxMpUserTagService(WxMpService wxMpService) {
+
+        return new WxMpUserTagServiceImpl(wxMpService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public WxMpMenuService wxMpMenuService(WxMpService wxMpService) {
+
+        return new WxMpMenuServiceImpl(wxMpService);
+    }
+
+
+    @Bean
     public WxMpMessageRouter router(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
-// 记录所有事件的日志 （异步执行）
-        newRouter.rule().handler(this.logHandler).next();
 
         // 接收客服会话管理事件
         newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
@@ -93,11 +101,6 @@ public class WechatMpConfig {
         newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
                 .event(WxConsts.EVT_KF_SWITCH_SESSION)
                 .handler(this.kfSessionHandler).end();
-
-        // 门店审核事件
-        newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
-                .event(WxConsts.EVT_POI_CHECK_NOTIFY)
-                .handler(this.storeCheckNotifyHandler).end();
 
         // 自定义菜单事件
         newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)

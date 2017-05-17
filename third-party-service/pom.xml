@@ -15,6 +15,7 @@
     <modules>
         <module>face-recognition</module>
         <module>speaker-recognition</module>
+        <module>files-storage</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,43 @@
+{
+  "button": [
+    {
+      "name": "签到管理",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "开始签到",
+          "key": "start_checkin"
+        },
+        {
+          "type": "click",
+          "name": "结束签到",
+          "key": "end_checkin",
+          "sub_button": [ ]
+        }
+      ]
+    },
+    {
+      "name": "本次签到",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "查看统计",
+          "key": "view_checkin"
+        }
+      ]
+    },
+    {
+      "name": "我的",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "我的信息",
+          "key": "my_info"
+        }
+      ]
+    }
+  ],
+  "matchrule": {
+    "tag_id": 107
+  }
+}

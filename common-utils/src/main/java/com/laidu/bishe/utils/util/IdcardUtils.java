@@ -4,7 +4,7 @@ package com.laidu.bishe.utils.util;
  * Created by chenwen on 16/5/26.
  */
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -293,7 +293,6 @@ public class IdcardUtils extends StringUtils {
         } else if (idCard.matches("^[1|5|7][0-9]{6}\\(?[0-9A-Z]\\)?$")) { // 澳门
             info[0] = "澳门";
             info[1] = "N";
-            // TODO
         } else if (idCard.matches("^[A-Z]{1,2}[0-9]{6}\\(?[0-9A]\\)?$")) { // 香港
             info[0] = "香港";
             info[1] = "N";
@@ -537,6 +536,21 @@ public class IdcardUtils extends StringUtils {
     }
 
     /**
+     * 获取生日
+     * @param idCard
+     * @return
+     */
+    public static Date getBirthday(String idCard) throws ParseException {
+        Integer len = idCard.length();
+        if (len < CHINA_ID_MIN_LENGTH) {
+            return null;
+        } else if (len == CHINA_ID_MIN_LENGTH) {
+            idCard = conver15CardTo18(idCard);
+        }
+        return new SimpleDateFormat("yyyyMMdd").parse(idCard.substring(6, 14));
+    }
+
+    /**
      * 根据身份编号获取性别
      *
      * @param idCard 身份编号
@@ -622,8 +636,27 @@ public class IdcardUtils extends StringUtils {
         return (iDate >= 1) && (iDate <= datePerMonth);
     }
 
+    /**
+     * 脱敏身份证
+     * @param idCard
+     * @param left
+     * @param right
+     * @return
+     */
+    public static String unSensitive(String idCard, int left, int right){
+        if (idCard != null && validateCard(idCard)){
+            StringBuilder result = new StringBuilder(idCard.substring(0, left));
+            for(int i = left + right; i < idCard.length(); ++i){
+                result.append("*");
+            }
+            return result.append(idCard.substring(idCard.length() - right)).toString();
+
+        }
+        return idCard;
+    }
+
 
     public static void main(String[] args) {
-        System.out.println(validateCard("652801198109170011"));
+        System.out.println(validateCard("410725199208160437"));
     }
 }

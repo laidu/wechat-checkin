@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <classPathEntry location="/Users/laidu/.m2/repository/org/postgresql/postgresql/42.0.0/postgresql-42.0.0.jar"></classPathEntry>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!--关闭注释 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection connectionURL="jdbc:postgresql://localhost:5432/wechat_checkin"
+                        driverClass="org.postgresql.Driver" password="123456" userId="postgres"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--生成的model 包路径 -->
+        <javaModelGenerator targetPackage="com.laidu.bishe.backstage.domain"
+                            targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成xml mapper文件 路径
+        <sqlMapGenerator targetPackage="/"
+                         targetProject="src/main/resources/mapperXml/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>-->
+
+        <!-- 生成的Dao接口 的包路径，生成带注解的 -->
+        <javaClientGenerator  targetPackage="com.laidu.bishe.backstage.mapper"
+                             targetProject="src/main/java/" type="ANNOTATEDMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="teacher_info" domainObjectName="TeacherInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="course_info" domainObjectName="CourseInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="seq_info" domainObjectName="SeqInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="wechat_user_info" domainObjectName="WechatUserInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="wechat_tag_info" domainObjectName="WechatTagInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="checkin_detail_info" domainObjectName="CheckinDetailInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="checkin_calculate_result" domainObjectName="CheckinCalculateResult"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="student_info" domainObjectName="StudentInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+
+    </context>
+</generatorConfiguration>

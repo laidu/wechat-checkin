@@ -1,0 +1,29 @@
+{
+  "button": [
+    {
+      "type": "click",
+      "name": "教师注册",
+      "key": "teacher_register"
+    },
+    {
+      "type": "click",
+      "name": "学生注册",
+      "key": "student_register"
+    },
+    {
+      "name": "关于",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "简介",
+          "url": "http://www.soso.com/"
+        },
+        {
+          "type": "click",
+          "name": "赞一个",
+          "key": "V1001_GOOD"
+        }
+      ]
+    }
+  ]
+}

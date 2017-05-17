@@ -2,6 +2,7 @@ package com.laidu.bishe.wechat.handler;
 
 import com.laidu.bishe.wechat.builder.TextBuilder;
 import com.laidu.bishe.utils.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 
- * @author Binary Wang
- *
+ * 微信消息处理器
+ * @author laidu
  */
+@Slf4j
 @Component
 public class MsgHandler extends AbstractHandler {
 
@@ -29,9 +30,9 @@ public class MsgHandler extends AbstractHandler {
 
         if (!wxMessage.getMsgType().equals(WxConsts.XML_MSG_EVENT)) {
             //TODO 可以选择将消息保存到本地
+            log.info("非事件消息,{}",wxMessage);
         }
 
-        //当用户输入关键词如“你好”，“客服”等，并且有客服在线时，把消息转发给在线客服
         try {
             if (StringUtils.startsWithAny(wxMessage.getContent(), "你好", "客服")
                 && weixinService.getKefuService().kfOnlineList()

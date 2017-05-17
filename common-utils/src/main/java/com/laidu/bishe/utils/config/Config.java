@@ -1,11 +1,11 @@
 package com.laidu.bishe.utils.config;
 
 import com.laidu.bishe.utils.util.FileUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -23,6 +23,7 @@ import java.util.HashSet;
  * Environment variable PANDORA_ACTIVE_CONFIG determines which one will be loaded. If it is not specified, we will
  * load dev.conf
  */
+@Slf4j
 public class Config {
     // Valid log names
     public static final String DEV = "dev";
@@ -30,7 +31,6 @@ public class Config {
     public static final String PROD = "prod";
     public static final String TEST = "test";
     public static final String root_dir = System.getProperty("user.dir");
-    private static Logger logger = Logger.getLogger(Config.class);
     // Singleton.
     private static Config instance = new Config();
     private String activeConfig;
@@ -71,7 +71,7 @@ public class Config {
     public static String getCriticalString(String key) {
         String value = instance.configuration.getString(key);
         if (value == null) {
-            logger.error("Cannot find configuration: " + key, new Exception());
+            log.error("Cannot find configuration: " + key, new Exception());
             System.exit(-1);
         }
         return value;
@@ -104,30 +104,28 @@ public class Config {
         validConfigs.add(PROD);
         validConfigs.add(TEST);
         if (!validConfigs.contains(activeConfig)) {
-            logger.error("Invalid configuration name: " + activeConfig, new Exception());
+            log.error("Invalid configuration name: " + activeConfig, new Exception());
             System.exit(-1);
         }
 
-        logger.info("start config file");
+        log.info("start config file");
         // Load common configuration and active configuration.
         configuration = new CompositeConfiguration();
         configuration.addConfiguration(loadConf("common"));
         configuration.addConfiguration(loadConf("strings"));
         configuration.addConfiguration(loadConf(activeConfig));
-        logger.info("end config file");
+        log.info("end config file");
     }
 
-    // Loads classpath:/conf/<configName>.conf
-    // Panics if loading failed.
     private Configuration loadConf(String configName) {
         PropertiesConfiguration conf = new PropertiesConfiguration();
         InputStream is = null;
         try {
-            logger.info("/conf/" + configName + ".conf");
+            log.info("/conf/" + configName + ".conf");
             is = Config.class.getResourceAsStream("/conf/" + configName + ".conf");
             conf.load(is);
         } catch (ConfigurationException e) {
-            logger.error("Cannot load configuration " + configName, e);
+            log.error("Cannot load configuration " + configName, e);
             FileUtil.safeClose(is);
             System.exit(-1);
         } finally {
