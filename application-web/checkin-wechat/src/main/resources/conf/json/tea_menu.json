@@ -13,16 +13,46 @@
           "name": "结束签到",
           "key": "end_checkin",
           "sub_button": [ ]
-        }
-      ]
-    },
-    {
-      "name": "本次签到",
-      "sub_button": [
+        },
         {
           "type": "click",
           "name": "查看统计",
           "key": "view_checkin"
+        }
+      ]
+    },
+    {
+      "name": "随机抽点",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "抽取10%",
+          "key": "random_checkin_10"
+        },
+        {
+          "type": "click",
+          "name": "抽取20%",
+          "key": "random_checkin_20"
+        },
+        {
+          "type": "click",
+          "name": "抽取30%",
+          "key": "random_checkin_30"
+        },
+        {
+          "type": "click",
+          "name": "抽取50%",
+          "key": "random_checkin_50"
+        },
+        {
+          "type": "click",
+          "name": "抽取80%",
+          "key": "random_checkin_80"
+        },
+        {
+          "type": "click",
+          "name": "抽取100%",
+          "key": "random_checkin_100"
         }
       ]
     },
@@ -32,7 +62,7 @@
         {
           "type": "click",
           "name": "我的信息",
-          "key": "my_info"
+          "key": "my_tea_info"
         }
       ]
     }

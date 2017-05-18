@@ -15,7 +15,6 @@
         <module>redisson</module>
         <module>mybatis</module>
         <module>zookeeper</module>
-        <module>logger</module>
         <module>nosql</module>
     </modules>
 

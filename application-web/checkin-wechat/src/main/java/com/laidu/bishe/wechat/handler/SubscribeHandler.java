@@ -1,7 +1,7 @@
 package com.laidu.bishe.wechat.handler;
 
 import com.laidu.bishe.backstage.domain.WechatUserInfo;
-import com.laidu.bishe.utils.util.JacksonUtil;
+import com.laidu.bishe.utils.utils.JacksonUtil;
 import com.laidu.bishe.wechat.builder.TextBuilder;
 import com.laidu.bishe.wechat.enums.FollowStatusEnum;
 import com.laidu.bishe.wechat.enums.WechatUserTagEnum;
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpUserTagService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 /**

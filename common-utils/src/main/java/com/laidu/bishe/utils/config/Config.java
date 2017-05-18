@@ -1,6 +1,6 @@
 package com.laidu.bishe.utils.config;
 
-import com.laidu.bishe.utils.util.FileUtil;
+import com.laidu.bishe.utils.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;

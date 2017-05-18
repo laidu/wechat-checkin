@@ -1,5 +1,8 @@
 package com.laidu.bishe.backstage.service;
 
+import com.laidu.bishe.backstage.domain.TeacherInfo;
+import com.laidu.bishe.backstage.model.ResultMessage;
+
 import java.io.BufferedInputStream;
 import java.util.List;
 
@@ -11,25 +14,25 @@ public interface TeacherService {
 
     /**
      * 开始自助考勤
+     * 不需要传入课程号，根据课表和当前时间查找考勤的课程
      * @param teacherWechatID
-     * @param courseID
      */
-    void startCheckin(String teacherWechatID,String courseID);
+    ResultMessage startCheckin(String teacherWechatID);
 
     /**
-     * 随机抽取学生
+     * 随机抽取学生（在已完成考勤的学生中）
      * @param teacherWechatID
-     * @param num
      * @return
      */
-    List<String> randomStudent(String teacherWechatID, int num);
+    List<String> randomStudent(String teacherWechatID, int centage);
 
     /**
      * 抽点考勤
-     * @param studentWechatID
-     * @param inputStream
+     * @param teacherWechatID
+     * @param centage
+     * @return
      */
-    void randomCheckIn(String studentWechatID, BufferedInputStream inputStream);
+    List<String> randomCheckIn(String teacherWechatID, int centage);
 
     /**
      * 结束考勤
@@ -43,7 +46,7 @@ public interface TeacherService {
      * @param courseID
      * @param seqNo
      */
-    void calcSum(String teacherID,String courseID,int seqNo);
+    void calcSum(Long teacherID,String courseID,int seqNo);
 
     /**
      * 手动修改考勤
@@ -74,7 +77,7 @@ public interface TeacherService {
      * @param wechatId
      * @return
      */
-    boolean bindingWechatId(String teacherId,String wechatId);
+    boolean bindingWechatId(Long teacherId,String wechatId);
 
 
     /**
@@ -83,5 +86,10 @@ public interface TeacherService {
      * @param newWechatId
      * @return
      */
-    boolean alterWechatId(String teacherId,String oldWechatId,String newWechatId);
+    boolean alterWechatId(Long teacherId,String oldWechatId,String newWechatId);
+
+    /**
+     *教师信息
+     */
+    TeacherInfo getMyInfo(Long teacherId);
 }

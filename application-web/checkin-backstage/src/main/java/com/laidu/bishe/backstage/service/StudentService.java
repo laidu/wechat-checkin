@@ -1,6 +1,6 @@
 package com.laidu.bishe.backstage.service;
 
-import com.laidu.bishe.backstage.model.Message;
+import com.laidu.bishe.backstage.model.ResultMessage;
 
 import java.io.BufferedInputStream;
 
@@ -16,7 +16,7 @@ public interface StudentService {
      * @param inputStream
      * @return
      */
-    Message stuCheckInByVoice(String stuWechatID , BufferedInputStream inputStream);
+    ResultMessage stuCheckInByVoice(String stuWechatID , BufferedInputStream inputStream);
 
     /**
      * 学生自助考勤-人脸考勤
@@ -24,7 +24,7 @@ public interface StudentService {
      * @param inputStream
      * @return
      */
-    Message stuCheckInByFace(String stuWechatID , BufferedInputStream inputStream);
+    ResultMessage stuCheckInByFace(String stuWechatID , BufferedInputStream inputStream);
 
     /**
      * 学生请假

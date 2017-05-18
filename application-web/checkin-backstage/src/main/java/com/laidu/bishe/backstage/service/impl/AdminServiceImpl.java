@@ -6,15 +6,14 @@ import com.laidu.bishe.backstage.domain.TeacherInfo;
 import com.laidu.bishe.backstage.mapper.CourseInfoMapper;
 import com.laidu.bishe.backstage.mapper.StudentInfoMapper;
 import com.laidu.bishe.backstage.mapper.TeacherInfoMapper;
-import com.laidu.bishe.backstage.model.Message;
+import com.laidu.bishe.backstage.model.ResultMessage;
 import com.laidu.bishe.backstage.service.AdminService;
-import com.laidu.bishe.utils.util.CsvUtil;
+import com.laidu.bishe.utils.utils.CsvUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public Message importTeacherInfoByCsv(String fileName) {
+    public ResultMessage importTeacherInfoByCsv(String fileName) {
 
 
         List<TeacherInfo> teacherInfos =  CsvUtil.readCsv2ObjestsList(TeacherInfo.class,fileName);
@@ -53,12 +52,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Message importTeacherInfoByExcel(String fileName) {
+    public ResultMessage importTeacherInfoByExcel(String fileName) {
         return null;
     }
 
     @Override
-    public Message importStudentInfoByCsv(String fileName) {
+    public ResultMessage importStudentInfoByCsv(String fileName) {
 
         List<StudentInfo> studentInfos =  CsvUtil.readCsv2ObjestsList(StudentInfo.class,fileName);
 
@@ -71,12 +70,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Message importStudentInfoByExcel(String fileName) {
+    public ResultMessage importStudentInfoByExcel(String fileName) {
         return null;
     }
 
     @Override
-    public Message importCourseInfoByCsv(String fileName) {
+    public ResultMessage importCourseInfoByCsv(String fileName) {
 
         List<CourseInfo> courseInfos = CsvUtil.readCsv2ObjestsList(CourseInfo.class,fileName);
 
@@ -87,7 +86,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Message importCourseInfoByExcel(String fileName) {
+    public ResultMessage importCourseInfoByExcel(String fileName) {
         return null;
     }
 }

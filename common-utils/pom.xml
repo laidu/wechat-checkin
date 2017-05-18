@@ -193,6 +193,10 @@
             <artifactId>jedis</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -22,7 +22,7 @@
         {
           "type": "click",
           "name": "请假",
-          "key": "face_checkin"
+          "key": "leave_checkin"
         }
       ]
     },
@@ -32,12 +32,12 @@
         {
           "type": "click",
           "name": "考勤记录",
-          "key": "check_recod"
+          "key": "my_recod"
         },
         {
           "type": "click",
           "name": "我的信息",
-          "key": "my_info"
+          "key": "my_stu_info"
         }
       ]
     }

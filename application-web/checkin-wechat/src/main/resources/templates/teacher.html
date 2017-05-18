@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title class="weui-actionsheet weui-actionsheet__title" >微信考勤-教师注册页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" th:href="@{//cdn.bootcss.com/weui/1.1.1/style/weui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css}"/>
+</head>
+<body class="toolbar title">
+
+
+    <form id="teacher_register" action="/wechat/register/teacher" method="post">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">教师工号</label></div>
+                <div class="weui-cell__bd">
+                    <input th:name="teacherId" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入教师工号"/>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">教师姓名</label></div>
+                <div class="weui-cell__bd">
+                    <input th:required="true" th:name="teacherName" class="weui-input" type="text"
+                           pattern="^[a-zA-Z-\u4E00-\u9FA5.•・·]{1,50}$" maxlength="11" placeholder="请输入教师姓名"/>
+                </div>
+            </div>
+            <input th:name="wechatId" type="hidden" th:value="${wechatId}"/>
+        </div>
+        <a href="javascript:register()" class="weui-btn weui-btn_primary">注册</a>
+    </form>
+
+
+    <script type="text/javascript" th:src="@{//cdn.bootcss.com/jquery/1.11.0/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js}"></script>
+    <script>
+        function register() {
+            $(teacher_register).submit();
+        }
+    </script>
+</body>
+</html>

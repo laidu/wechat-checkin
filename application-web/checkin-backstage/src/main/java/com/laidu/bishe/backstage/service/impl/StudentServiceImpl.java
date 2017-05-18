@@ -3,7 +3,7 @@ package com.laidu.bishe.backstage.service.impl;
 import com.laidu.bishe.backstage.domain.StudentInfo;
 import com.laidu.bishe.backstage.mapper.StudentInfoMapper;
 import com.laidu.bishe.backstage.mapper.WechatUserInfoMapper;
-import com.laidu.bishe.backstage.model.Message;
+import com.laidu.bishe.backstage.model.ResultMessage;
 import com.laidu.bishe.backstage.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +28,13 @@ public class StudentServiceImpl implements StudentService {
     private WechatUserInfoMapper userInfoMapper;
 
     @Override
-    public Message stuCheckInByVoice(String stuWechatID, BufferedInputStream inputStream) {
+    public ResultMessage stuCheckInByVoice(String stuWechatID, BufferedInputStream inputStream) {
 
         return null;
     }
 
     @Override
-    public Message stuCheckInByFace(String stuWechatID, BufferedInputStream inputStream) {
+    public ResultMessage stuCheckInByFace(String stuWechatID, BufferedInputStream inputStream) {
         return null;
     }
 

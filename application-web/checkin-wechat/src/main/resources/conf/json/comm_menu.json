@@ -1,14 +1,14 @@
 {
   "button": [
     {
-      "type": "click",
+      "type": "view",
       "name": "教师注册",
-      "key": "teacher_register"
+      "url": "http://laidu823.natapp4.cc/wechat/auth2/teacher"
     },
     {
-      "type": "click",
+      "type": "view",
       "name": "学生注册",
-      "key": "student_register"
+      "url": "http://laidu823.natapp4.cc/wechat/auth2/student"
     },
     {
       "name": "关于",

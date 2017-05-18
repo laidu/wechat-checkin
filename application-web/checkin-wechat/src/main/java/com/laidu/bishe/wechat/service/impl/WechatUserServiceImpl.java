@@ -2,7 +2,7 @@ package com.laidu.bishe.wechat.service.impl;
 
 import com.laidu.bishe.backstage.domain.WechatUserInfo;
 import com.laidu.bishe.backstage.mapper.WechatUserInfoMapper;
-import com.laidu.bishe.backstage.model.Message;
+import com.laidu.bishe.backstage.model.ResultMessage;
 import com.laidu.bishe.wechat.enums.FollowStatusEnum;
 import com.laidu.bishe.wechat.service.WechatUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class WechatUserServiceImpl implements WechatUserService {
     private WechatUserInfoMapper userInfoMapper;
 
     @Override
-    public Message follow(WechatUserInfo userInfo) {
+    public ResultMessage follow(WechatUserInfo userInfo) {
 
         try {
             userInfoMapper.insert(userInfo);
@@ -35,7 +35,7 @@ public class WechatUserServiceImpl implements WechatUserService {
     }
 
     @Override
-    public Message unFollow(String wechatId) {
+    public ResultMessage unFollow(String wechatId) {
 
         WechatUserInfo userInfo = userInfoMapper.selectByPrimaryKey(wechatId);
 
@@ -48,5 +48,15 @@ public class WechatUserServiceImpl implements WechatUserService {
         userInfoMapper.updateByPrimaryKey(userInfo);
 
         return null;
+    }
+
+    @Override
+    public boolean studentRegister(String studentId, String studentName, String wechatId) {
+        return false;
+    }
+
+    @Override
+    public boolean teacherRegister(String teacherId, String teacherName, String wechatId) {
+        return false;
     }
 }
