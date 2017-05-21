@@ -1,5 +1,6 @@
 package com.laidu.bishe.backstage.service;
 
+import com.laidu.bishe.backstage.domain.SeqInfo;
 import com.laidu.bishe.backstage.model.ResultMessage;
 
 /**
@@ -32,5 +33,10 @@ public interface AdminService {
     ResultMessage importCourseInfoByCsv(String fileName);
     ResultMessage importCourseInfoByExcel(String fileName);
 
-
+    /**
+     * 通过教师id请求考勤次序号，只有正确拿到考勤次序号教师才能开启考勤
+     * @param teacherId
+     * @return
+     */
+    SeqInfo requestSeqInfo(Long teacherId);
 }

@@ -30,7 +30,7 @@ public class CheckinCalculateResultSqlProvider {
         }
         
         if (record.getResult() != null) {
-            sql.VALUES("result", "#{result,jdbcType=OTHER}");
+            sql.VALUES("result", "#{result,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -57,7 +57,7 @@ public class CheckinCalculateResultSqlProvider {
         }
         
         if (record.getResult() != null) {
-            sql.SET("result = #{result,jdbcType=OTHER}");
+            sql.SET("result = #{result,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=BIGINT}");

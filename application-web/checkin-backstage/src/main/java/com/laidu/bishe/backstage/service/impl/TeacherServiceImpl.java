@@ -1,16 +1,25 @@
 package com.laidu.bishe.backstage.service.impl;
 
+import com.laidu.bishe.backstage.config.RedisPropertis;
+import com.laidu.bishe.backstage.domain.SeqInfo;
 import com.laidu.bishe.backstage.domain.TeacherInfo;
+import com.laidu.bishe.backstage.exception.ExceptionCode;
 import com.laidu.bishe.backstage.mapper.TeacherInfoMapper;
+import com.laidu.bishe.backstage.mapper.custom.TeacherInfoCustMapper;
+import com.laidu.bishe.backstage.model.CheckinQueueInfo;
 import com.laidu.bishe.backstage.model.ResultMessage;
+import com.laidu.bishe.backstage.service.AdminService;
 import com.laidu.bishe.backstage.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RMap;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedInputStream;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by laidu on 2017/5/17.
@@ -19,13 +28,61 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private RedisPropertis redisPropertis;
+
     @Lazy
     @Autowired(required = false)
-    private TeacherInfoMapper teacherInfoMapper;
+    private TeacherInfoCustMapper teacherInfoCustMapper;
+
+    @Autowired
+    private AdminService adminService;
 
     @Override
     public ResultMessage startCheckin(String teacherWechatID) {
-        return null;
+
+        RMap<Long,CheckinQueueInfo> rMap = redissonClient
+                .getMap(redisPropertis.getCkeckinQueueKey());
+
+        //如果考勤队列不存在，则需要设置对列超时时间
+        if (!rMap.isExists()){
+            rMap.expire(redisPropertis.getTimeWindows(), TimeUnit.MINUTES);
+        }
+
+        //判断教师是否已经在考勤队列
+        if (rMap.containsKey(teacherWechatID)){
+            return ResultMessage.builder()
+                    .code(ExceptionCode.CHECKIN_IS_STARTED.getCode())
+                    .message(ExceptionCode.CHECKIN_IS_STARTED.getMessage())
+                    .build();
+        }
+
+        TeacherInfo teacherInfo = teacherInfoCustMapper.selectByWechatId(teacherWechatID);
+
+        //获取考勤次序信息
+        SeqInfo seqInfo = adminService.requestSeqInfo(teacherInfo.getTeacherId());
+
+        if (seqInfo==null){
+            return ResultMessage.builder()
+                    .code(ExceptionCode.CHECKIN_START_FAILD.getCode())
+                    .message(ExceptionCode.CHECKIN_START_FAILD.getMessage())
+                    .build();
+        }
+
+        CheckinQueueInfo queueInfo = CheckinQueueInfo.builder()
+                .startTime(new Date())
+                .wechatId(teacherWechatID)
+                .build();
+        //放入考勤队列
+        rMap.put(teacherInfo.getTeacherId(),queueInfo);
+
+        return ResultMessage.builder()
+                .code(ExceptionCode.CHECKIN_START_SUCCEED.getCode())
+                .message(ExceptionCode.CHECKIN_START_SUCCEED.getMessage())
+                .build();
     }
 
     @Override
@@ -40,8 +97,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 
     @Override
-    public boolean stopCheckin(String teacherWechatID) {
-        return false;
+    public ResultMessage stopCheckin(String teacherWechatID) {
+        return null;
     }
 
     @Override
@@ -73,12 +130,15 @@ public class TeacherServiceImpl implements TeacherService {
     public boolean bindingWechatId(Long teacherId, String wechatId) {
 
         TeacherInfo teacherInfo = getMyInfo(teacherId);
-        teacherInfo.setWechatId(wechatId);
 
+        if (teacherId == null) {
+            return false;
+        }
+        teacherInfo.setWechatId(wechatId);
         try {
-            teacherInfoMapper.updateByPrimaryKeySelective(teacherInfo);
-        }catch (Exception e){
-            log.info("绑定微信号失败！teacher = {}",teacherInfo);
+            teacherInfoCustMapper.updateByPrimaryKeySelective(teacherInfo);
+        } catch (Exception e) {
+            log.info("绑定微信号失败！teacher = {}", teacherInfo);
             return false;
         }
 
@@ -93,7 +153,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherInfo getMyInfo(Long teacherId) {
 
-        TeacherInfo teacherInfo = teacherInfoMapper.selectByPrimaryKey(teacherId);
+        TeacherInfo teacherInfo = teacherInfoCustMapper.selectByPrimaryKey(teacherId);
 
         return teacherInfo;
     }

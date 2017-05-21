@@ -5,5 +5,4 @@ package com.laidu.bishe.backstage.enums;
  */
 public enum  CheckInResult {
 
-
 }

@@ -38,7 +38,7 @@ public interface TeacherService {
      * 结束考勤
      * @param teacherWechatID
      */
-    boolean stopCheckin(String teacherWechatID);
+    ResultMessage stopCheckin(String teacherWechatID);
 
     /**
      * 统计考勤结果

@@ -103,14 +103,19 @@ public class MenuHandler extends AbstractHandler {
                 case END_CHECKIN:
 
                     //教师点击结束考勤
-                    message = teacherService.startCheckin(wxMessage.getFromUser()).getMessage();
+                    message = teacherService.stopCheckin(wxMessage.getFromUser()).getMessage();
                     break;
 
 
                 case VIEW_CHECKIN:
 
+                    // TODO: 2017/5/21 查看本节统计
                     //教师点击查看统计（本次考勤）
 
+                    break;
+
+                case MY_TEA_INFO:
+                    // TODO: 2017/5/21 教师信息
                     break;
             }
         }

@@ -24,22 +24,4 @@ public interface WechatUserService {
      */
     ResultMessage unFollow(String wechatId);
 
-    /**
-     * 学生注册
-     * @param studentId
-     * @param studentName
-     * @param wechatId
-     * @return
-     */
-    boolean studentRegister(String studentId,String studentName,String wechatId);
-
-    /**
-     * 教师注册
-     * @param teacherId
-     * @param teacherName
-     * @param wechatId
-     * @return
-     */
-    boolean teacherRegister(String teacherId, String teacherName,String wechatId);
-
 }

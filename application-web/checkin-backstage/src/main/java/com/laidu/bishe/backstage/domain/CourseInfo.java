@@ -1,6 +1,8 @@
 package com.laidu.bishe.backstage.domain;
 
 public class CourseInfo {
+    private Long id;
+
     private Long courseId;
 
     private String courseName;
@@ -8,6 +10,16 @@ public class CourseInfo {
     private Long teacherId;
 
     private String className;
+
+    private String sessionId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getCourseId() {
         return courseId;
@@ -39,5 +51,13 @@ public class CourseInfo {
 
     public void setClassName(String className) {
         this.className = className == null ? null : className.trim();
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId == null ? null : sessionId.trim();
     }
 }

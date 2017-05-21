@@ -50,13 +50,4 @@ public class WechatUserServiceImpl implements WechatUserService {
         return null;
     }
 
-    @Override
-    public boolean studentRegister(String studentId, String studentName, String wechatId) {
-        return false;
-    }
-
-    @Override
-    public boolean teacherRegister(String teacherId, String teacherName, String wechatId) {
-        return false;
-    }
 }

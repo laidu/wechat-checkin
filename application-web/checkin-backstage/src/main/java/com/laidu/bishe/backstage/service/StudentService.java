@@ -48,4 +48,5 @@ public interface StudentService {
      * @return
      */
     boolean alterWechatId(Long stuId,String newWechatId);
+
 }

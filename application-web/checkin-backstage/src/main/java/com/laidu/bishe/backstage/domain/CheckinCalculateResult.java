@@ -11,7 +11,7 @@ public class CheckinCalculateResult {
 
     private Long seqEnd;
 
-    private Object result;
+    private String result;
 
     public Long getId() {
         return id;
@@ -53,11 +53,11 @@ public class CheckinCalculateResult {
         this.seqEnd = seqEnd;
     }
 
-    public Object getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(Object result) {
-        this.result = result;
+    public void setResult(String result) {
+        this.result = result == null ? null : result.trim();
     }
 }

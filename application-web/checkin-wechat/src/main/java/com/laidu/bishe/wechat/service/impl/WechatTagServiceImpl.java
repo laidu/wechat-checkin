@@ -90,14 +90,12 @@ public class WechatTagServiceImpl implements WechatTagService {
 
         try {
             List<WxUserTag> tags = new ArrayList<>();
-
             for (int i=0;i<3;i++){
                 tags = wxMpUserTagService.tagGet();
                 if (tags.size()>0){
                     break;
                 }
             }
-
             tags.forEach(tag -> {
 
                 WechatTagInfo tagInfo = convertToWechatTagInfo(tag);

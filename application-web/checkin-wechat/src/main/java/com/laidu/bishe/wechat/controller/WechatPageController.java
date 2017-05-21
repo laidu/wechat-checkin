@@ -1,6 +1,5 @@
 package com.laidu.bishe.wechat.controller;
 
-import com.laidu.bishe.backstage.domain.TeacherInfo;
 import com.laidu.bishe.backstage.dto.TeacherInfoDto;
 import com.laidu.bishe.backstage.service.TeacherService;
 import com.laidu.bishe.common.web.result.JSONResult;
@@ -17,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 /**
  * 微信公众号页面
@@ -92,7 +90,7 @@ public class WechatPageController {
         return JSONResult.ok();
     }
 
-    @PostMapping("/register/teacher")
+    @PostMapping("/register/student")
     public @ResponseBody JSONResult studentRegister(@Valid @ModelAttribute TeacherInfoDto infoDto) {
 
         log.info("教师注册信息 infoDto, {}",infoDto);

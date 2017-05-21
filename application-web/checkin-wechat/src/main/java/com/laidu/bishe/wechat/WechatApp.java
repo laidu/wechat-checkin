@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySources;
  */
 @EnableCaching
 @SpringBootApplication
-@MapperScan("com.laidu.bishe.backstage.mapper")
+@MapperScan({"com.laidu.bishe.backstage.mapper","com.laidu.bishe.backstage.mapper.custom"})
 @ComponentScan(
         basePackages = {"com.laidu.bishe"},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX,pattern = "com.laidu.bishe.[^(common.web | wechat | backstage)].*")}
