@@ -1,16 +1,15 @@
 package com.laidu.bishe.backstage.service.impl;
 
 import com.laidu.bishe.backstage.config.SessionProperties;
-import com.laidu.bishe.backstage.domain.CourseInfo;
-import com.laidu.bishe.backstage.domain.SeqInfo;
-import com.laidu.bishe.backstage.domain.StudentInfo;
-import com.laidu.bishe.backstage.domain.TeacherInfo;
+import com.laidu.bishe.backstage.domain.*;
+import com.laidu.bishe.backstage.enums.WeekEnum;
 import com.laidu.bishe.backstage.mapper.SeqInfoMapper;
+import com.laidu.bishe.backstage.mapper.SessionInfoMapper;
 import com.laidu.bishe.backstage.mapper.StudentInfoMapper;
 import com.laidu.bishe.backstage.mapper.TeacherInfoMapper;
 import com.laidu.bishe.backstage.mapper.custom.CourseInfoCustMapper;
+import com.laidu.bishe.backstage.mapper.custom.SessionInfoCustMapper;
 import com.laidu.bishe.backstage.model.ResultMessage;
-import com.laidu.bishe.backstage.model.SessionInfo;
 import com.laidu.bishe.backstage.service.AdminService;
 import com.laidu.bishe.backstage.service.SessionService;
 import com.laidu.bishe.utils.utils.CsvUtil;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +29,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class AdminServiceImpl implements AdminService {
+
 
     @Lazy
     @Autowired(required = false)
@@ -46,15 +47,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired(required = false)
     private SeqInfoMapper seqInfoMapper;
 
+    @Lazy
+    @Autowired(required = false)
+    private SessionInfoCustMapper sessionInfoCustMapper;
+
     @Autowired
     private SessionService sessionService;
 
+
     @Autowired
     private SessionProperties sessionProperties;
-
-
-
-
 
 
     @Override
@@ -96,8 +98,14 @@ public class AdminServiceImpl implements AdminService {
         List<CourseInfo> courseInfos = CsvUtil.readCsv2ObjestsList(CourseInfo.class, fileName);
 
         courseInfos.forEach(courseInfo -> {
-            courseInfoCustMapper.insert(courseInfo);
+            courseInfoCustMapper.insertSelective(courseInfo);
         });
+        return null;
+    }
+
+
+    @Override
+    public ResultMessage importSessionInfoByExcel(String fileName) {
         return null;
     }
 
@@ -105,6 +113,19 @@ public class AdminServiceImpl implements AdminService {
     public ResultMessage importCourseInfoByExcel(String fileName) {
         return null;
     }
+
+    @Override
+    public ResultMessage importSessionInfoByCsv(String fileName) {
+
+        List<SessionInfo> sessionInfos = CsvUtil.readCsv2ObjestsList(SessionInfo.class,fileName);
+
+        sessionInfos.forEach(sessionInfo -> {
+            sessionInfoCustMapper.insertSelective(sessionInfo);
+        });
+
+        return null;
+    }
+
 
     @Override
     public SeqInfo requestSeqInfo(Long teacherId) {
@@ -115,9 +136,20 @@ public class AdminServiceImpl implements AdminService {
         CourseInfo courseInfo = null;
 
         //获取当前时间节次信息
-        SessionInfo sessionId = sessionService.getSessionInfo(new Date(),sessionProperties.getBeforeMin());
 
-        courseInfo = courseInfoCustMapper.selectByTeaSesId(teacherId,sessionId.getSessionId().getName(),sessionId.getDay().getName());
+        Calendar current = Calendar.getInstance();
+//        int hour = current.get(Calendar.HOUR);
+//        int min = current.get(Calendar.MINUTE);
+        // TODO: 2017/5/22 测试用 
+        int hour = 8;
+        int min = 35;
+        WeekEnum weekDay = WeekEnum.getEnum(current.get(Calendar.DAY_OF_WEEK));
+
+
+        // TODO: 2017/5/22 如果找不到课程就抛出异常， 由全局的异常处理拦截
+        SessionInfo sessionInfo = sessionInfoCustMapper.selectByTime(hour,min);
+
+        courseInfo = courseInfoCustMapper.selectByTeaSesId(teacherId, sessionInfo.getSessionIndex(), weekDay.getName());
 
         /**
          * step 2、获取课程信息后新建一条考勤次序记录并返回考勤次序号
@@ -128,8 +160,8 @@ public class AdminServiceImpl implements AdminService {
         seqInfo.setStartTime(new Date());
         seqInfo.setCourseId(courseInfo.getCourseId());
 
-        seqInfoMapper.insert(seqInfo);
+        seqInfoMapper.insertSelective(seqInfo);
 
-        return null;
+        return seqInfo;
     }
 }

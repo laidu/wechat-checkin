@@ -1,6 +1,5 @@
 package com.laidu.bishe.backstage.service.impl;
 
-import com.laidu.bishe.backstage.model.SessionInfo;
 import com.laidu.bishe.backstage.service.SessionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,8 @@ public class SessionServiceImpl implements SessionService{
 
 
 
-    @Override
-    public SessionInfo getSessionInfo(Date current, int beforeMin) {
-        return null;
-    }
+//    @Override
+//    public SessionInfo getSessionInfo(Date current, int beforeMin) {
+//        return null;
+//    }
 }

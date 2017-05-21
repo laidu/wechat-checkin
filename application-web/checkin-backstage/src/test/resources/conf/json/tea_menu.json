@@ -1,0 +1,73 @@
+{
+  "button": [
+    {
+      "name": "签到管理",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "开始签到",
+          "key": "start_checkin"
+        },
+        {
+          "type": "click",
+          "name": "结束签到",
+          "key": "end_checkin",
+          "sub_button": [ ]
+        },
+        {
+          "type": "click",
+          "name": "查看统计",
+          "key": "view_checkin"
+        }
+      ]
+    },
+    {
+      "name": "随机抽点",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "抽取10%",
+          "key": "random_checkin_10"
+        },
+        {
+          "type": "click",
+          "name": "抽取20%",
+          "key": "random_checkin_20"
+        },
+        {
+          "type": "click",
+          "name": "抽取30%",
+          "key": "random_checkin_30"
+        },
+        {
+          "type": "click",
+          "name": "抽取50%",
+          "key": "random_checkin_50"
+        },
+        {
+          "type": "click",
+          "name": "抽取80%",
+          "key": "random_checkin_80"
+        },
+        {
+          "type": "click",
+          "name": "抽取100%",
+          "key": "random_checkin_100"
+        }
+      ]
+    },
+    {
+      "name": "我的",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "我的信息",
+          "key": "my_tea_info"
+        }
+      ]
+    }
+  ],
+  "matchrule": {
+    "tag_id": 107
+  }
+}

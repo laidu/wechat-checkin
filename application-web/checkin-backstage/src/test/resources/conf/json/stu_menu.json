@@ -1,0 +1,48 @@
+{
+  "button": [
+    {
+      "type": "click",
+      "name": "我要签到",
+      "key": "request_checkin"
+    },
+    {
+      "name": "签到方式",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "声纹签到",
+          "key": "voice_checkin"
+        },
+        {
+          "type": "pic_sysphoto",
+          "name": "刷脸签到",
+          "key": "face_checkin",
+          "sub_button": [ ]
+        },
+        {
+          "type": "click",
+          "name": "请假",
+          "key": "leave_checkin"
+        }
+      ]
+    },
+    {
+      "name": "我的",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "考勤记录",
+          "key": "my_recod"
+        },
+        {
+          "type": "click",
+          "name": "我的信息",
+          "key": "my_stu_info"
+        }
+      ]
+    }
+  ],
+  "matchrule": {
+    "tag_id": 106
+  }
+}

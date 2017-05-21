@@ -1,6 +1,5 @@
 package com.laidu.bishe.backstage.service;
 
-import com.laidu.bishe.backstage.model.SessionInfo;
 
 import java.util.Date;
 
@@ -16,5 +15,5 @@ public interface SessionService {
      * @param beforeMin 上课前几分钟
      * @return
      */
-    SessionInfo getSessionInfo(Date current, int beforeMin);
+//    SessionInfo getSessionInfo(Date current, int beforeMin);
 }

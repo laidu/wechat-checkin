@@ -44,12 +44,14 @@ public class MenuHandler extends AbstractHandler {
                 wxMessage.getMsgType(), wxMessage.getEvent(),
                 wxMessage.getEventKey());
 
-        switch (wxMessage.getEvent()) {
+        switch (wxMessage.getEvent().toLowerCase()) {
 
             case WxConsts.BUTTON_VIEW:
                 break;
             case WxConsts.BUTTON_CLICK:
-                // TODO: 2017/5/17 实现业务逻辑 
+
+                //实现业务逻辑
+                clickEventHandle(wxMessage);
                 break;
         }
 

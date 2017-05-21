@@ -3,8 +3,6 @@ package com.laidu.bishe.backstage.domain;
 import java.util.Date;
 
 public class CheckinDetailInfo {
-    private Long id;
-
     private Long stuId;
 
     private Date checkinTime;
@@ -21,13 +19,7 @@ public class CheckinDetailInfo {
 
     private Long seqId;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long id;
 
     public Long getStuId() {
         return stuId;
@@ -91,5 +83,13 @@ public class CheckinDetailInfo {
 
     public void setSeqId(Long seqId) {
         this.seqId = seqId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -21,10 +21,6 @@ public class SeqInfoSqlProvider {
             sql.VALUES("course_id", "#{courseId,jdbcType=BIGINT}");
         }
         
-        if (record.getSeq() != null) {
-            sql.VALUES("seq", "#{seq,jdbcType=BIGINT}");
-        }
-        
         if (record.getStartTime() != null) {
             sql.VALUES("start_time", "#{startTime,jdbcType=TIMESTAMP}");
         }
@@ -42,10 +38,6 @@ public class SeqInfoSqlProvider {
         
         if (record.getCourseId() != null) {
             sql.SET("course_id = #{courseId,jdbcType=BIGINT}");
-        }
-        
-        if (record.getSeq() != null) {
-            sql.SET("seq = #{seq,jdbcType=BIGINT}");
         }
         
         if (record.getStartTime() != null) {

@@ -23,17 +23,18 @@ public interface CourseInfoCustMapper extends CourseInfoMapper {
             "select",
             "id, course_id, course_name, teacher_id, class_name, session_id",
             "from course_info",
-            "where teacher_id = #{teacherId,jdbcType=BIGINT} " +
-                    "and session_id = #{sessionId,jdbcType=VARCHAR} " +
-                    "and day = #{day,jdbcType=VARCHAR}"
+            "where teacher_id = #{arg0,jdbcType=BIGINT} " +
+                    "and session_id = #{arg1,jdbcType=VARCHAR} " +
+                    "and week_day = #{arg2,jdbcType=VARCHAR}"
     })
     @Results({
-            @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
+            @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
             @Result(column="course_id", property="courseId", jdbcType=JdbcType.BIGINT),
             @Result(column="course_name", property="courseName", jdbcType=JdbcType.VARCHAR),
             @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT),
             @Result(column="class_name", property="className", jdbcType=JdbcType.VARCHAR),
-            @Result(column="session_id", property="sessionId", jdbcType=JdbcType.VARCHAR)
+            @Result(column="session_id", property="sessionId", jdbcType=JdbcType.VARCHAR),
+            @Result(column="week_day", property="weekDay", jdbcType=JdbcType.VARCHAR)
     })
     CourseInfo selectByTeaSesId(Long teacherId,String sessionId, String day);
 }

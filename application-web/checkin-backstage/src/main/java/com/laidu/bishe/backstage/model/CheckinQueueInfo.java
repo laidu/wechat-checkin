@@ -24,9 +24,15 @@ public class CheckinQueueInfo {
     private String wechatId;
 
     /**
+     * 考勤次序号
+     */
+    private Long seqId;
+
+    /**
      * 开启考勤的时间
      */
     private Date startTime;
+
 
     /**
      * 考勤课程名

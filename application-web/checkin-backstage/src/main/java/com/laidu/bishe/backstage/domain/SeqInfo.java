@@ -9,8 +9,6 @@ public class SeqInfo {
 
     private Long courseId;
 
-    private Long seq;
-
     private Date startTime;
 
     public Long getId() {
@@ -35,14 +33,6 @@ public class SeqInfo {
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
-    }
-
-    public Long getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Long seq) {
-        this.seq = seq;
     }
 
     public Date getStartTime() {

@@ -21,10 +21,12 @@ public interface CourseInfoMapper {
     @Insert({
         "insert into course_info (id, course_id, ",
         "course_name, teacher_id, ",
-        "class_name, session_id)",
+        "class_name, session_id, ",
+        "week_day)",
         "values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, ",
         "#{courseName,jdbcType=VARCHAR}, #{teacherId,jdbcType=BIGINT}, ",
-        "#{className,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR})"
+        "#{className,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, ",
+        "#{weekDay,jdbcType=VARCHAR})"
     })
     int insert(CourseInfo record);
 
@@ -33,7 +35,7 @@ public interface CourseInfoMapper {
 
     @Select({
         "select",
-        "id, course_id, course_name, teacher_id, class_name, session_id",
+        "id, course_id, course_name, teacher_id, class_name, session_id, week_day",
         "from course_info",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -43,7 +45,8 @@ public interface CourseInfoMapper {
         @Result(column="course_name", property="courseName", jdbcType=JdbcType.VARCHAR),
         @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT),
         @Result(column="class_name", property="className", jdbcType=JdbcType.VARCHAR),
-        @Result(column="session_id", property="sessionId", jdbcType=JdbcType.VARCHAR)
+        @Result(column="session_id", property="sessionId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="week_day", property="weekDay", jdbcType=JdbcType.VARCHAR)
     })
     CourseInfo selectByPrimaryKey(Long id);
 
@@ -56,7 +59,8 @@ public interface CourseInfoMapper {
           "course_name = #{courseName,jdbcType=VARCHAR},",
           "teacher_id = #{teacherId,jdbcType=BIGINT},",
           "class_name = #{className,jdbcType=VARCHAR},",
-          "session_id = #{sessionId,jdbcType=VARCHAR}",
+          "session_id = #{sessionId,jdbcType=VARCHAR},",
+          "week_day = #{weekDay,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(CourseInfo record);

@@ -33,6 +33,10 @@ public class CourseInfoSqlProvider {
             sql.VALUES("session_id", "#{sessionId,jdbcType=VARCHAR}");
         }
         
+        if (record.getWeekDay() != null) {
+            sql.VALUES("week_day", "#{weekDay,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
@@ -58,6 +62,10 @@ public class CourseInfoSqlProvider {
         
         if (record.getSessionId() != null) {
             sql.SET("session_id = #{sessionId,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getWeekDay() != null) {
+            sql.SET("week_day = #{weekDay,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=BIGINT}");

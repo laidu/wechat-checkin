@@ -26,9 +26,10 @@ public class AdminServiceImplTest {
     @Test
     public void importTeacherInfoByCsv() throws Exception {
 
-        adminService.importStudentInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/studentInfo.csv");
-        adminService.importTeacherInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/teacherInfo.csv");
-        adminService.importCourseInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/courseInfo.csv");
+//        adminService.importStudentInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/studentInfo.csv");
+//        adminService.importTeacherInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/teacherInfo.csv");
+//        adminService.importCourseInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/courseInfo.csv");
+        adminService.importSessionInfoByCsv("/Users/laidu/IdeaProjects/wechat-checkin/application-web/checkin-backstage/src/test/resources/sessionInfo.csv");
     }
 
 }

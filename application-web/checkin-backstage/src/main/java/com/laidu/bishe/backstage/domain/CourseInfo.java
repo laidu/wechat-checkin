@@ -13,6 +13,8 @@ public class CourseInfo {
 
     private String sessionId;
 
+    private String weekDay;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class CourseInfo {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId == null ? null : sessionId.trim();
+    }
+
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay == null ? null : weekDay.trim();
     }
 }

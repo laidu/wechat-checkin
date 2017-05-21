@@ -1,53 +1,63 @@
 package com.laidu.bishe.backstage.domain;
 
 public class SessionInfo {
-    private Integer id;
+    private Long sessionId;
 
-    private String sessionId;
+    private String sessionIndex;
 
-    private String startTime;
+    private Integer startMin;
 
-    private String endTime;
+    private Integer startHour;
 
-    private String day;
+    private Integer endHour;
 
-    public Integer getId() {
-        return id;
-    }
+    private Integer endMin;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getSessionId() {
+    public Long getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId == null ? null : sessionId.trim();
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getSessionIndex() {
+        return sessionIndex;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime == null ? null : startTime.trim();
+    public void setSessionIndex(String sessionIndex) {
+        this.sessionIndex = sessionIndex == null ? null : sessionIndex.trim();
     }
 
-    public String getEndTime() {
-        return endTime;
+    public Integer getStartMin() {
+        return startMin;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime == null ? null : endTime.trim();
+    public void setStartMin(Integer startMin) {
+        this.startMin = startMin;
     }
 
-    public String getDay() {
-        return day;
+    public Integer getStartHour() {
+        return startHour;
     }
 
-    public void setDay(String day) {
-        this.day = day == null ? null : day.trim();
+    public void setStartHour(Integer startHour) {
+        this.startHour = startHour;
+    }
+
+    public Integer getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(Integer endHour) {
+        this.endHour = endHour;
+    }
+
+    public Integer getEndMin() {
+        return endMin;
+    }
+
+    public void setEndMin(Integer endMin) {
+        this.endMin = endMin;
     }
 }

@@ -14,17 +14,17 @@ import org.apache.ibatis.type.JdbcType;
 public interface SessionInfoMapper {
     @Delete({
         "delete from session_info",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where session_id = #{sessionId,jdbcType=BIGINT}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long sessionId);
 
     @Insert({
-        "insert into session_info (id, session_id, ",
-        "start_time, end_time, ",
-        "day)",
-        "values (#{id,jdbcType=INTEGER}, #{sessionId,jdbcType=VARCHAR}, ",
-        "#{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, ",
-        "#{day,jdbcType=VARCHAR})"
+        "insert into session_info (session_id, session_index, ",
+        "start_min, start_hour, ",
+        "end_hour, end_min)",
+        "values (#{sessionId,jdbcType=BIGINT}, #{sessionIndex,jdbcType=VARCHAR}, ",
+        "#{startMin,jdbcType=INTEGER}, #{startHour,jdbcType=INTEGER}, ",
+        "#{endHour,jdbcType=INTEGER}, #{endMin,jdbcType=INTEGER})"
     })
     int insert(SessionInfo record);
 
@@ -33,29 +33,31 @@ public interface SessionInfoMapper {
 
     @Select({
         "select",
-        "id, session_id, start_time, end_time, day",
+        "session_id, session_index, start_min, start_hour, end_hour, end_min",
         "from session_info",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where session_id = #{sessionId,jdbcType=BIGINT}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="session_id", property="sessionId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="start_time", property="startTime", jdbcType=JdbcType.VARCHAR),
-        @Result(column="end_time", property="endTime", jdbcType=JdbcType.VARCHAR),
-        @Result(column="day", property="day", jdbcType=JdbcType.VARCHAR)
+        @Result(column="session_id", property="sessionId", jdbcType=JdbcType.BIGINT, id=true),
+        @Result(column="session_index", property="sessionIndex", jdbcType=JdbcType.VARCHAR),
+        @Result(column="start_min", property="startMin", jdbcType=JdbcType.INTEGER),
+        @Result(column="start_hour", property="startHour", jdbcType=JdbcType.INTEGER),
+        @Result(column="end_hour", property="endHour", jdbcType=JdbcType.INTEGER),
+        @Result(column="end_min", property="endMin", jdbcType=JdbcType.INTEGER)
     })
-    SessionInfo selectByPrimaryKey(Integer id);
+    SessionInfo selectByPrimaryKey(Long sessionId);
 
     @UpdateProvider(type=SessionInfoSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(SessionInfo record);
 
     @Update({
         "update session_info",
-        "set session_id = #{sessionId,jdbcType=VARCHAR},",
-          "start_time = #{startTime,jdbcType=VARCHAR},",
-          "end_time = #{endTime,jdbcType=VARCHAR},",
-          "day = #{day,jdbcType=VARCHAR}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "set session_index = #{sessionIndex,jdbcType=VARCHAR},",
+          "start_min = #{startMin,jdbcType=INTEGER},",
+          "start_hour = #{startHour,jdbcType=INTEGER},",
+          "end_hour = #{endHour,jdbcType=INTEGER},",
+          "end_min = #{endMin,jdbcType=INTEGER}",
+        "where session_id = #{sessionId,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(SessionInfo record);
 }
