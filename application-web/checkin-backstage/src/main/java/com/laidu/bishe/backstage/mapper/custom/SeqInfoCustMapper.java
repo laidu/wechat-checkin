@@ -17,16 +17,6 @@ public interface SeqInfoCustMapper extends SeqInfoMapper{
      * @param record
      * @return
      */
-//    @Insert({
-//            "insert into seq_info (teacher_id, ",
-//            "course_id, start_time)",
-//            "values (#{teacherId,jdbcType=BIGINT}, ",
-//            " #{courseId,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP})"
-//    })
-//    @SelectKey(statement = "nextval('seq_info_id_seq'::regclass)",
-//            before = false,
-//            keyProperty = "id",
-//            resultType = Long.class)
     @InsertProvider(type=SeqInfoSqlProvider.class, method="insertSelective")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Long insertReKey(SeqInfo record);

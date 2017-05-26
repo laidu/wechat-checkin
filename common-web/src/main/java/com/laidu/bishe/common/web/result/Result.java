@@ -2,9 +2,6 @@ package com.laidu.bishe.common.web.result;
 
 import java.io.Serializable;
 
-/**
- * Created by cw on 15-11-20.
- */
 public class Result<T> implements Serializable {
     /**
      * 状态码

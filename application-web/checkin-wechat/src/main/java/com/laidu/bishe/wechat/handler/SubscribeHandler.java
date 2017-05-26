@@ -20,9 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-/**
- * @author Binary Wang
- */
+
 @Slf4j
 @Component
 public class SubscribeHandler extends AbstractHandler {

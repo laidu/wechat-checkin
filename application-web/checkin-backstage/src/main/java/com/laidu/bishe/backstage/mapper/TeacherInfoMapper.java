@@ -20,9 +20,9 @@ public interface TeacherInfoMapper {
 
     @Insert({
         "insert into teacher_info (teacher_id, teacher_name, ",
-        "wechat_id)",
+        "wechat_id, register_time)",
         "values (#{teacherId,jdbcType=BIGINT}, #{teacherName,jdbcType=VARCHAR}, ",
-        "#{wechatId,jdbcType=VARCHAR})"
+        "#{wechatId,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP})"
     })
     int insert(TeacherInfo record);
 
@@ -31,14 +31,15 @@ public interface TeacherInfoMapper {
 
     @Select({
         "select",
-        "teacher_id, teacher_name, wechat_id",
+        "teacher_id, teacher_name, wechat_id, register_time",
         "from teacher_info",
         "where teacher_id = #{teacherId,jdbcType=BIGINT}"
     })
     @Results({
         @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="teacher_name", property="teacherName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="wechat_id", property="wechatId", jdbcType=JdbcType.VARCHAR)
+        @Result(column="wechat_id", property="wechatId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="register_time", property="registerTime", jdbcType=JdbcType.TIMESTAMP)
     })
     TeacherInfo selectByPrimaryKey(Long teacherId);
 
@@ -48,7 +49,8 @@ public interface TeacherInfoMapper {
     @Update({
         "update teacher_info",
         "set teacher_name = #{teacherName,jdbcType=VARCHAR},",
-          "wechat_id = #{wechatId,jdbcType=VARCHAR}",
+          "wechat_id = #{wechatId,jdbcType=VARCHAR},",
+          "register_time = #{registerTime,jdbcType=TIMESTAMP}",
         "where teacher_id = #{teacherId,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(TeacherInfo record);

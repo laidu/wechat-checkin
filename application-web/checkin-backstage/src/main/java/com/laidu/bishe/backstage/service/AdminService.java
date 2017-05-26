@@ -1,7 +1,12 @@
 package com.laidu.bishe.backstage.service;
 
-import com.laidu.bishe.backstage.domain.SeqInfo;
+import com.laidu.bishe.backstage.domain.CheckinCalculateResult;
+import com.laidu.bishe.backstage.model.CheckinQueueInfo;
 import com.laidu.bishe.backstage.model.ResultMessage;
+import com.laidu.bishe.backstage.model.SeqDetialInfo;
+import org.redisson.api.RMap;
+
+import java.util.List;
 
 /**
  * 微信考勤后台service接口
@@ -46,5 +51,18 @@ public interface AdminService {
      * @param teacherId
      * @return
      */
-    SeqInfo requestSeqInfo(Long teacherId);
+    SeqDetialInfo requestSeqInfo(Long teacherId);
+
+    /**
+     * 获取考勤队列
+     * @return
+     */
+    RMap<Long,CheckinQueueInfo> getCheckinQueue();
+
+    /**
+     * 统计考勤结果
+     * @param checkinCalculateResults
+     * @return
+     */
+    String parseCheckinResult(List<CheckinCalculateResult> checkinCalculateResults);
 }

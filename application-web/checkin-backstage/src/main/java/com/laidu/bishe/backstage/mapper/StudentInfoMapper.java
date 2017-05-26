@@ -14,17 +14,19 @@ import org.apache.ibatis.type.JdbcType;
 public interface StudentInfoMapper {
     @Delete({
         "delete from student_info",
-        "where stu_id = #{stuId,jdbcType=BIGINT}"
+        "where student_id = #{studentId,jdbcType=BIGINT}"
     })
-    int deleteByPrimaryKey(Long stuId);
+    int deleteByPrimaryKey(Long studentId);
 
     @Insert({
-        "insert into student_info (stu_id, stu_name, ",
+        "insert into student_info (student_id, student_name, ",
         "wechat_id, class_id, ",
-        "feature_path, feature_type)",
-        "values (#{stuId,jdbcType=BIGINT}, #{stuName,jdbcType=VARCHAR}, ",
+        "feature_path, feature_type, ",
+        "register_time)",
+        "values (#{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, ",
         "#{wechatId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, ",
-        "#{featurePath,jdbcType=VARCHAR}, #{featureType,jdbcType=SMALLINT})"
+        "#{featurePath,jdbcType=VARCHAR}, #{featureType,jdbcType=SMALLINT}, ",
+        "#{registerTime,jdbcType=TIMESTAMP})"
     })
     int insert(StudentInfo record);
 
@@ -33,31 +35,33 @@ public interface StudentInfoMapper {
 
     @Select({
         "select",
-        "stu_id, stu_name, wechat_id, class_id, feature_path, feature_type",
+        "student_id, student_name, wechat_id, class_id, feature_path, feature_type, register_time",
         "from student_info",
-        "where stu_id = #{stuId,jdbcType=BIGINT}"
+        "where student_id = #{studentId,jdbcType=BIGINT}"
     })
     @Results({
-        @Result(column="stu_id", property="stuId", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="stu_name", property="stuName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="student_id", property="studentId", jdbcType=JdbcType.BIGINT, id=true),
+        @Result(column="student_name", property="studentName", jdbcType=JdbcType.VARCHAR),
         @Result(column="wechat_id", property="wechatId", jdbcType=JdbcType.VARCHAR),
         @Result(column="class_id", property="classId", jdbcType=JdbcType.VARCHAR),
         @Result(column="feature_path", property="featurePath", jdbcType=JdbcType.VARCHAR),
-        @Result(column="feature_type", property="featureType", jdbcType=JdbcType.SMALLINT)
+        @Result(column="feature_type", property="featureType", jdbcType=JdbcType.SMALLINT),
+        @Result(column="register_time", property="registerTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    StudentInfo selectByPrimaryKey(Long stuId);
+    StudentInfo selectByPrimaryKey(Long studentId);
 
     @UpdateProvider(type=StudentInfoSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(StudentInfo record);
 
     @Update({
         "update student_info",
-        "set stu_name = #{stuName,jdbcType=VARCHAR},",
+        "set student_name = #{studentName,jdbcType=VARCHAR},",
           "wechat_id = #{wechatId,jdbcType=VARCHAR},",
           "class_id = #{classId,jdbcType=VARCHAR},",
           "feature_path = #{featurePath,jdbcType=VARCHAR},",
-          "feature_type = #{featureType,jdbcType=SMALLINT}",
-        "where stu_id = #{stuId,jdbcType=BIGINT}"
+          "feature_type = #{featureType,jdbcType=SMALLINT},",
+          "register_time = #{registerTime,jdbcType=TIMESTAMP}",
+        "where student_id = #{studentId,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(StudentInfo record);
 }

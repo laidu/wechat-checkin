@@ -9,12 +9,12 @@ public class StudentInfoSqlProvider {
         SQL sql = new SQL();
         sql.INSERT_INTO("student_info");
         
-        if (record.getStuId() != null) {
-            sql.VALUES("stu_id", "#{stuId,jdbcType=BIGINT}");
+        if (record.getStudentId() != null) {
+            sql.VALUES("student_id", "#{studentId,jdbcType=BIGINT}");
         }
         
-        if (record.getStuName() != null) {
-            sql.VALUES("stu_name", "#{stuName,jdbcType=VARCHAR}");
+        if (record.getStudentName() != null) {
+            sql.VALUES("student_name", "#{studentName,jdbcType=VARCHAR}");
         }
         
         if (record.getWechatId() != null) {
@@ -33,6 +33,10 @@ public class StudentInfoSqlProvider {
             sql.VALUES("feature_type", "#{featureType,jdbcType=SMALLINT}");
         }
         
+        if (record.getRegisterTime() != null) {
+            sql.VALUES("register_time", "#{registerTime,jdbcType=TIMESTAMP}");
+        }
+        
         return sql.toString();
     }
 
@@ -40,8 +44,8 @@ public class StudentInfoSqlProvider {
         SQL sql = new SQL();
         sql.UPDATE("student_info");
         
-        if (record.getStuName() != null) {
-            sql.SET("stu_name = #{stuName,jdbcType=VARCHAR}");
+        if (record.getStudentName() != null) {
+            sql.SET("student_name = #{studentName,jdbcType=VARCHAR}");
         }
         
         if (record.getWechatId() != null) {
@@ -60,7 +64,11 @@ public class StudentInfoSqlProvider {
             sql.SET("feature_type = #{featureType,jdbcType=SMALLINT}");
         }
         
-        sql.WHERE("stu_id = #{stuId,jdbcType=BIGINT}");
+        if (record.getRegisterTime() != null) {
+            sql.SET("register_time = #{registerTime,jdbcType=TIMESTAMP}");
+        }
+        
+        sql.WHERE("student_id = #{studentId,jdbcType=BIGINT}");
         
         return sql.toString();
     }

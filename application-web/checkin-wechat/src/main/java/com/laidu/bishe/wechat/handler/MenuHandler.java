@@ -1,14 +1,17 @@
 package com.laidu.bishe.wechat.handler;
 
-import com.laidu.bishe.backstage.model.ResultMessage;
+import com.laidu.bishe.backstage.domain.StudentInfo;
+import com.laidu.bishe.backstage.model.CheckinContentInfo;
 import com.laidu.bishe.backstage.service.StudentService;
 import com.laidu.bishe.backstage.service.TeacherService;
 import com.laidu.bishe.wechat.enums.ClickMenuKeyEnum;
 import com.laidu.bishe.wechat.service.WechatUserService;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,9 @@ public class MenuHandler extends AbstractHandler {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    private WxMpService wxMpService;
+
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
                                     Map<String, Object> context, WxMpService weixinService,
@@ -43,6 +49,9 @@ public class MenuHandler extends AbstractHandler {
         String msg = String.format("type:%s, event:%s, key:%s",
                 wxMessage.getMsgType(), wxMessage.getEvent(),
                 wxMessage.getEventKey());
+        WxMpXmlOutMessage out = WxMpXmlOutMessage.TEXT().content(msg)
+                .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
+                .build();
 
         switch (wxMessage.getEvent().toLowerCase()) {
 
@@ -51,13 +60,11 @@ public class MenuHandler extends AbstractHandler {
             case WxConsts.BUTTON_CLICK:
 
                 //实现业务逻辑
-                clickEventHandle(wxMessage);
+                out = clickEventHandle(wxMessage);
                 break;
         }
 
-        return WxMpXmlOutMessage.TEXT().content(msg)
-                .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
-                .build();
+        return out;
     }
 
     /**
@@ -79,10 +86,46 @@ public class MenuHandler extends AbstractHandler {
             String eventKey = wxMessage.getEventKey();
 
             int centage = Integer.parseInt(eventKey.replace(ClickMenuKeyEnum.RANDOM_CHECKIN_.name().toLowerCase(),""));
-            List<String> students = teacherService.randomCheckIn(wxMessage.getFromUser(),centage);
+            List<StudentInfo> students = teacherService.randomCheckIn(wxMessage.getFromUser(),centage);
 
-            //返回抽点的学生名单
-            message = students.toString();
+
+            if (students!=null){
+
+                //通知抽点学生进行二次考勤
+                students.forEach(studentInfo -> {
+
+                    wxMessage.setFromUser(studentInfo.getWechatId());
+
+                    //创建文本消息
+                    WxMpKefuMessage mpKefuMessage = new WxMpKefuMessage();
+                    mpKefuMessage.setToUser(studentInfo.getWechatId());
+                    mpKefuMessage.setContent("请完成本次抽点签到！");
+                    mpKefuMessage.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+
+                    try {
+//                    发送文本消息
+                        wxMpService.getKefuService().sendKefuMessage(mpKefuMessage);
+                    } catch (WxErrorException e) {
+                        e.printStackTrace();
+                    }
+
+                    //返回抽点的学生名单
+
+                });
+
+                StringBuffer studentList = new StringBuffer();
+                studentList.append("抽点学生名单：\n\n");
+
+                students.forEach(studentInfo -> {
+
+                    studentList.append(" "+studentInfo.getStudentName()+"\n");
+                });
+
+                message = studentList.toString();
+            }
+
+            message = "尚未开启考勤或考勤已结束";
+
         }
 
         try {
@@ -108,16 +151,52 @@ public class MenuHandler extends AbstractHandler {
                     message = teacherService.stopCheckin(wxMessage.getFromUser()).getMessage();
                     break;
 
-
                 case VIEW_CHECKIN:
 
-                    // TODO: 2017/5/21 查看本节统计
-                    //教师点击查看统计（本次考勤）
+                    // 查看本节统计
+                    message = teacherService.viewCurrentCheckIn(wxMessage.getFromUser()).getMessage();
+                    break;
 
+                case MY_COURSE_INFO:
+
+                    // 我的课表信息
+                    message = teacherService.getMyCourseInfo(wxMessage.getFromUser());
                     break;
 
                 case MY_TEA_INFO:
-                    // TODO: 2017/5/21 教师信息
+                    // 教师信息
+                    message = teacherService.getMyInfo(wxMessage.getFromUser()).toString();
+                    break;
+
+                case MY_STU_INFO:
+                    // 学生信息查询
+                    message=studentService.getMyInfo(wxMessage.getFromUser()).toString();
+                    break;
+
+                case REQUEST_CHECKIN:
+                    //学生请求考勤
+                    CheckinContentInfo checkinContentInfo =studentService.requestCheckin(wxMessage.getFromUser());
+                    if (checkinContentInfo!=null){
+                        message = studentService.requestCheckin(wxMessage.getFromUser()).toString();
+                    }else {
+                        message = "教师尚未开启考勤";
+                    }
+                    break;
+
+                case LEAVE_CHECKIN:
+                    // 学生请假
+
+                    CheckinContentInfo leaveContentInfo =studentService.stuRequestLeave(wxMessage.getFromUser());
+                    if (leaveContentInfo!=null){
+                        message = leaveContentInfo.toString();
+                    }else {
+                        message = "教师尚未开启考勤";
+                    }
+                    break;
+
+                case MY_RECOD:
+                    // 学生考勤记录查询
+                    message = studentService.getMycheckinRec(wxMessage.getFromUser()).getMessage();
                     break;
             }
         }
@@ -129,6 +208,5 @@ public class MenuHandler extends AbstractHandler {
                 .toUser(wxMessage.getFromUser())
                 .build();
     }
-
 
 }

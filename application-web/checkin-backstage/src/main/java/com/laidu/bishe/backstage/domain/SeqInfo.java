@@ -11,6 +11,8 @@ public class SeqInfo {
 
     private Date startTime;
 
+    private String classIds;
+
     public Long getId() {
         return id;
     }
@@ -41,5 +43,13 @@ public class SeqInfo {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public String getClassIds() {
+        return classIds;
+    }
+
+    public void setClassIds(String classIds) {
+        this.classIds = classIds == null ? null : classIds.trim();
     }
 }

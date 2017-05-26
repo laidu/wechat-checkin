@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
-/**
- * Created by huangpin on 16/11/16.
- */
 public class JAXBUtil<T> {
     /**
      * 对象转换为xml

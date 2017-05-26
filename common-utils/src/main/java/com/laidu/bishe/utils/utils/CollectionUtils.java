@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * Created by chenwen on 16/5/16.
- */
 public class CollectionUtils {
     public static boolean isEmpty(Collection list){
         return !isNotEmpty(list);

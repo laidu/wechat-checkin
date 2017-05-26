@@ -32,4 +32,19 @@ public class WechatProperties {
      * 设置微信公众号的EncodingAESKey
      */
     private String aesKey;
+
+    /**
+     * 微信多媒体文件保存路径
+     */
+    private String tmpDirFile;
+
+    /**
+     * 微信图片保存路径
+     */
+    private String tmpPictureDirFile;
+
+    /**
+     * 微信音频保存路径
+     */
+    private String tmpVoiceDirFile;
 }

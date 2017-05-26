@@ -20,9 +20,11 @@ public interface SeqInfoMapper {
 
     @Insert({
         "insert into seq_info (id, teacher_id, ",
-        "course_id, start_time)",
+        "course_id, start_time, ",
+        "class_ids)",
         "values (#{id,jdbcType=BIGINT}, #{teacherId,jdbcType=BIGINT}, ",
-        "#{courseId,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP})"
+        "#{courseId,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, ",
+        "#{classIds,jdbcType=VARCHAR})"
     })
     int insert(SeqInfo record);
 
@@ -31,7 +33,7 @@ public interface SeqInfoMapper {
 
     @Select({
         "select",
-        "id, teacher_id, course_id, start_time",
+        "id, teacher_id, course_id, start_time, class_ids",
         "from seq_info",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -39,7 +41,8 @@ public interface SeqInfoMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT),
         @Result(column="course_id", property="courseId", jdbcType=JdbcType.BIGINT),
-        @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="class_ids", property="classIds", jdbcType=JdbcType.VARCHAR)
     })
     SeqInfo selectByPrimaryKey(Long id);
 
@@ -50,7 +53,8 @@ public interface SeqInfoMapper {
         "update seq_info",
         "set teacher_id = #{teacherId,jdbcType=BIGINT},",
           "course_id = #{courseId,jdbcType=BIGINT},",
-          "start_time = #{startTime,jdbcType=TIMESTAMP}",
+          "start_time = #{startTime,jdbcType=TIMESTAMP},",
+          "class_ids = #{classIds,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(SeqInfo record);

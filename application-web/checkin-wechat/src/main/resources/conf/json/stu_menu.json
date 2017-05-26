@@ -9,11 +9,6 @@
       "name": "签到方式",
       "sub_button": [
         {
-          "type": "click",
-          "name": "声纹签到",
-          "key": "voice_checkin"
-        },
-        {
           "type": "pic_sysphoto",
           "name": "刷脸签到",
           "key": "face_checkin",
@@ -21,7 +16,7 @@
         },
         {
           "type": "click",
-          "name": "请假",
+          "name": "自助请假",
           "key": "leave_checkin"
         }
       ]
@@ -31,7 +26,7 @@
       "sub_button": [
         {
           "type": "click",
-          "name": "考勤记录",
+          "name": "我的考勤",
           "key": "my_recod"
         },
         {

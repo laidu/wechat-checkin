@@ -27,7 +27,7 @@ public class RedisPropertis {
      * 考勤时间窗口
      * 单位为min
      */
-    @Value("${redis.time_windows:90}")
+    @Value("${redis.time_windows:1}")
     private int timeWindows;
 
 

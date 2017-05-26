@@ -3,30 +3,38 @@ package com.laidu.bishe.backstage.domain;
 import java.util.Date;
 
 public class CheckinDetailInfo {
-    private Long stuId;
+    private Long id;
+
+    private Long studentId;
 
     private Date checkinTime;
 
     private String proofPath;
 
-    private Short checkinType;
+    private String checkinType;
 
     private Boolean isSucc;
 
-    private Short checkinResult;
+    private Long seqId;
+
+    private Integer checkinResult;
 
     private Long courseId;
 
-    private Long seqId;
-
-    private Long id;
-
-    public Long getStuId() {
-        return stuId;
+    public Long getId() {
+        return id;
     }
 
-    public void setStuId(Long stuId) {
-        this.stuId = stuId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public Date getCheckinTime() {
@@ -45,12 +53,12 @@ public class CheckinDetailInfo {
         this.proofPath = proofPath == null ? null : proofPath.trim();
     }
 
-    public Short getCheckinType() {
+    public String getCheckinType() {
         return checkinType;
     }
 
-    public void setCheckinType(Short checkinType) {
-        this.checkinType = checkinType;
+    public void setCheckinType(String checkinType) {
+        this.checkinType = checkinType == null ? null : checkinType.trim();
     }
 
     public Boolean getIsSucc() {
@@ -61,11 +69,19 @@ public class CheckinDetailInfo {
         this.isSucc = isSucc;
     }
 
-    public Short getCheckinResult() {
+    public Long getSeqId() {
+        return seqId;
+    }
+
+    public void setSeqId(Long seqId) {
+        this.seqId = seqId;
+    }
+
+    public Integer getCheckinResult() {
         return checkinResult;
     }
 
-    public void setCheckinResult(Short checkinResult) {
+    public void setCheckinResult(Integer checkinResult) {
         this.checkinResult = checkinResult;
     }
 
@@ -75,21 +91,5 @@ public class CheckinDetailInfo {
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
-    }
-
-    public Long getSeqId() {
-        return seqId;
-    }
-
-    public void setSeqId(Long seqId) {
-        this.seqId = seqId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

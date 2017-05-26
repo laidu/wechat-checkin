@@ -33,7 +33,7 @@ public class WechatTagServiceImpl implements WechatTagService {
             wxMpUserTagService.batchTagging(getTagId(tag),new String[]{wechatId});
             return true;
         } catch (WxErrorException e) {
-            log.info("添加微信用户标签失败：wechatId={} ,tag={}",wechatId,tag);
+            log.info("添加微信用户标签失败：teaWechatId={} ,tag={}",wechatId,tag);
         }
 
         return false;

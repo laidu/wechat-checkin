@@ -10,7 +10,6 @@ import com.laidu.bishe.utils.exception.BaseException;
 import com.google.gson.Gson;
 import com.laidu.bishe.utils.utils.HttpMethod;
 import com.laidu.bishe.utils.utils.JAXBUtil;
-import com.laidu.bishe.utils.utils.ValidateUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
@@ -92,13 +91,11 @@ public class HttpUtils {
 
     public static <T> T getModelFromQueryString(String queryStringJson, Class<T> type){
         T result = new Gson().fromJson(queryStringJson, type);
-        ValidateUtil.validate(result);
         return result;
     }
 
     public static <T> T getModelFromQueryString(HttpServletRequest request, Class<T> type){
         T result = new Gson().fromJson(getQueryStringAsJson(request), type);
-        ValidateUtil.validate(result);
         return result;
     }
 
@@ -141,7 +138,6 @@ public class HttpUtils {
         } catch (Exception e) {
             throw new WebException(WebBasicCodeEnum.ARGUMENT_PARSE_ERROR,e);
         }
-        ValidateUtil.validate(result);
         return result;
     }
 

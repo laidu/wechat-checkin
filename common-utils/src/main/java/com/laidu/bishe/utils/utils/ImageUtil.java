@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-/**
- * Created by huangpin on 16/7/21.
- */
 public class ImageUtil {
 
     /**

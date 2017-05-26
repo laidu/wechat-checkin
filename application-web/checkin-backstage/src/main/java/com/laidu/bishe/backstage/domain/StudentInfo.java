@@ -1,9 +1,11 @@
 package com.laidu.bishe.backstage.domain;
 
-public class StudentInfo {
-    private Long stuId;
+import java.util.Date;
 
-    private String stuName;
+public class StudentInfo {
+    private Long studentId;
+
+    private String studentName;
 
     private String wechatId;
 
@@ -13,20 +15,22 @@ public class StudentInfo {
 
     private Short featureType;
 
-    public Long getStuId() {
-        return stuId;
+    private Date registerTime;
+
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStuId(Long stuId) {
-        this.stuId = stuId;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public String getStuName() {
-        return stuName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStuName(String stuName) {
-        this.stuName = stuName == null ? null : stuName.trim();
+    public void setStudentName(String studentName) {
+        this.studentName = studentName == null ? null : studentName.trim();
     }
 
     public String getWechatId() {
@@ -59,5 +63,13 @@ public class StudentInfo {
 
     public void setFeatureType(Short featureType) {
         this.featureType = featureType;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }

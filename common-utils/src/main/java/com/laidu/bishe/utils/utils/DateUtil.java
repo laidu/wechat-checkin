@@ -7,9 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by chenwen on 16/10/24.
- */
 public class DateUtil {
 
     public static final long DAYOFTWOWEEK=2*7;

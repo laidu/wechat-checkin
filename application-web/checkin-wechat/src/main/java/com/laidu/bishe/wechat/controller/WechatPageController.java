@@ -1,6 +1,8 @@
 package com.laidu.bishe.wechat.controller;
 
+import com.laidu.bishe.backstage.dto.StudentInfoDto;
 import com.laidu.bishe.backstage.dto.TeacherInfoDto;
+import com.laidu.bishe.backstage.service.StudentService;
 import com.laidu.bishe.backstage.service.TeacherService;
 import com.laidu.bishe.common.web.result.JSONResult;
 import com.laidu.bishe.wechat.enums.UserTypeEnum;
@@ -34,6 +36,9 @@ public class WechatPageController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private WechatTagService wechatTagService;
@@ -91,12 +96,12 @@ public class WechatPageController {
     }
 
     @PostMapping("/register/student")
-    public @ResponseBody JSONResult studentRegister(@Valid @ModelAttribute TeacherInfoDto infoDto) {
+    public @ResponseBody JSONResult studentRegister(@Valid @ModelAttribute StudentInfoDto infoDto) {
 
-        log.info("教师注册信息 infoDto, {}",infoDto);
+        log.info("学生注册信息 infoDto, {}",infoDto);
         //绑定教师微信号
-        teacherService.bindingWechatId(infoDto.getTeacherId(),infoDto.getWechatId());
-        wechatTagService.addUserTag(WechatUserTagEnum.TEACHER,infoDto.getWechatId());
+        studentService.bindingWechatId(infoDto.getStudentId(),infoDto.getWechatId());
+        wechatTagService.addUserTag(WechatUserTagEnum.STUDENT,infoDto.getWechatId());
 
         return JSONResult.ok();
     }

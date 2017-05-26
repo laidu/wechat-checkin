@@ -1,7 +1,10 @@
 package com.laidu.bishe.backstage.service;
 
+import com.laidu.bishe.backstage.domain.CheckinCalculateResult;
+import com.laidu.bishe.backstage.domain.StudentInfo;
 import com.laidu.bishe.backstage.domain.TeacherInfo;
 import com.laidu.bishe.backstage.model.ResultMessage;
+import com.laidu.bishe.backstage.model.TeacherDetialInfo;
 
 import java.io.BufferedInputStream;
 import java.util.List;
@@ -24,7 +27,7 @@ public interface TeacherService {
      * @param teacherWechatID
      * @return
      */
-    List<String> randomStudent(String teacherWechatID, int centage);
+    List<StudentInfo> randomStudent(String teacherWechatID, int centage);
 
     /**
      * 抽点考勤
@@ -32,7 +35,7 @@ public interface TeacherService {
      * @param centage
      * @return
      */
-    List<String> randomCheckIn(String teacherWechatID, int centage);
+    List<StudentInfo> randomCheckIn(String teacherWechatID, int centage);
 
     /**
      * 结束考勤
@@ -46,7 +49,7 @@ public interface TeacherService {
      * @param courseID
      * @param seqNo
      */
-    void calcSum(Long teacherID,String courseID,int seqNo);
+    List<CheckinCalculateResult> calcSum(Long teacherID, Long courseID, Long seqNo, List<String> classIds);
 
     /**
      * 手动修改考勤
@@ -73,6 +76,12 @@ public interface TeacherService {
     void gatherCheckIn(String teacherWechatID);
 
     /**
+     * 统计当前考勤记录
+     * @param teacherWechatID
+     */
+    ResultMessage viewCurrentCheckIn(String teacherWechatID);
+
+    /**
      * 绑定微信号
      * @param wechatId
      * @return
@@ -91,5 +100,12 @@ public interface TeacherService {
     /**
      *教师信息
      */
-    TeacherInfo getMyInfo(Long teacherId);
+    TeacherDetialInfo getMyInfo(String teacherWechatID);
+
+    /**
+     * 我的课表信息
+     * @param teacherWechatID
+     * @return
+     */
+    String getMyCourseInfo(String teacherWechatID);
 }

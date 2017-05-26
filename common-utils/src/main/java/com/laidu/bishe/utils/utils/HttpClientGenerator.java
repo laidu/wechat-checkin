@@ -22,9 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-/**
- * Created by cw on 15-9-11.
- */
 @Slf4j
 public class HttpClientGenerator {
 

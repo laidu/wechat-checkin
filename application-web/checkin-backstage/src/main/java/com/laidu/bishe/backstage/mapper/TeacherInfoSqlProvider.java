@@ -21,6 +21,10 @@ public class TeacherInfoSqlProvider {
             sql.VALUES("wechat_id", "#{wechatId,jdbcType=VARCHAR}");
         }
         
+        if (record.getRegisterTime() != null) {
+            sql.VALUES("register_time", "#{registerTime,jdbcType=TIMESTAMP}");
+        }
+        
         return sql.toString();
     }
 
@@ -34,6 +38,10 @@ public class TeacherInfoSqlProvider {
         
         if (record.getWechatId() != null) {
             sql.SET("wechat_id = #{wechatId,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getRegisterTime() != null) {
+            sql.SET("register_time = #{registerTime,jdbcType=TIMESTAMP}");
         }
         
         sql.WHERE("teacher_id = #{teacherId,jdbcType=BIGINT}");

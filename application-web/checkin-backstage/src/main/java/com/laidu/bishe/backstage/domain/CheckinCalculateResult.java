@@ -3,15 +3,15 @@ package com.laidu.bishe.backstage.domain;
 public class CheckinCalculateResult {
     private Long id;
 
-    private String courceId;
-
     private Long teacherId;
 
-    private Long seqStart;
+    private Long studentId;
 
-    private Long seqEnd;
+    private Integer checkinResult;
 
-    private String result;
+    private Long seqId;
+
+    private Long courceId;
 
     public Long getId() {
         return id;
@@ -19,14 +19,6 @@ public class CheckinCalculateResult {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCourceId() {
-        return courceId;
-    }
-
-    public void setCourceId(String courceId) {
-        this.courceId = courceId == null ? null : courceId.trim();
     }
 
     public Long getTeacherId() {
@@ -37,27 +29,35 @@ public class CheckinCalculateResult {
         this.teacherId = teacherId;
     }
 
-    public Long getSeqStart() {
-        return seqStart;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setSeqStart(Long seqStart) {
-        this.seqStart = seqStart;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public Long getSeqEnd() {
-        return seqEnd;
+    public Integer getCheckinResult() {
+        return checkinResult;
     }
 
-    public void setSeqEnd(Long seqEnd) {
-        this.seqEnd = seqEnd;
+    public void setCheckinResult(Integer checkinResult) {
+        this.checkinResult = checkinResult;
     }
 
-    public String getResult() {
-        return result;
+    public Long getSeqId() {
+        return seqId;
     }
 
-    public void setResult(String result) {
-        this.result = result == null ? null : result.trim();
+    public void setSeqId(Long seqId) {
+        this.seqId = seqId;
+    }
+
+    public Long getCourceId() {
+        return courceId;
+    }
+
+    public void setCourceId(Long courceId) {
+        this.courceId = courceId;
     }
 }

@@ -2,9 +2,6 @@ package com.laidu.bishe.utils.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * Created by chenwen on 16/9/21.
- */
 public class HttpLogHelper {
     private static final String HEADER_TEMPLATE = "[HTTP REQUEST HEADER]: %s";
     private static final String HEADER_RESPONSE_TEMPLATE = "[HTTP RESPONSE HEADER]: %s";

@@ -1,26 +1,37 @@
 package com.laidu.bishe.backstage.service.impl;
 
+import com.laidu.bishe.backstage.config.RedisPropertis;
 import com.laidu.bishe.backstage.config.SessionProperties;
 import com.laidu.bishe.backstage.domain.*;
+import com.laidu.bishe.backstage.enums.CheckInResultEnum;
 import com.laidu.bishe.backstage.enums.WeekEnum;
+import com.laidu.bishe.backstage.exception.BackstageException;
 import com.laidu.bishe.backstage.mapper.SeqInfoMapper;
-import com.laidu.bishe.backstage.mapper.SessionInfoMapper;
 import com.laidu.bishe.backstage.mapper.StudentInfoMapper;
 import com.laidu.bishe.backstage.mapper.TeacherInfoMapper;
 import com.laidu.bishe.backstage.mapper.custom.CourseInfoCustMapper;
+import com.laidu.bishe.backstage.mapper.custom.SeqInfoCustMapper;
 import com.laidu.bishe.backstage.mapper.custom.SessionInfoCustMapper;
+import com.laidu.bishe.backstage.model.CheckinQueueInfo;
 import com.laidu.bishe.backstage.model.ResultMessage;
+import com.laidu.bishe.backstage.model.SeqDetialInfo;
 import com.laidu.bishe.backstage.service.AdminService;
 import com.laidu.bishe.backstage.service.SessionService;
+import com.laidu.bishe.common.web.exception.WebException;
 import com.laidu.bishe.utils.utils.CsvUtil;
+import com.laidu.bishe.utils.utils.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RMap;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 管理员服务接口实现
@@ -29,6 +40,12 @@ import java.util.List;
 @Slf4j
 @Service
 public class AdminServiceImpl implements AdminService {
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private RedisPropertis redisPropertis;
 
 
     @Lazy
@@ -45,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Lazy
     @Autowired(required = false)
-    private SeqInfoMapper seqInfoMapper;
+    private SeqInfoCustMapper seqInfoCustMapper;
 
     @Lazy
     @Autowired(required = false)
@@ -128,12 +145,12 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public SeqInfo requestSeqInfo(Long teacherId) {
+    public SeqDetialInfo requestSeqInfo(Long teacherId) {
 
         /**
          * step 1、通过微信id和当前时间获取当前需要签到的课程信息和班级信息
          */
-        CourseInfo courseInfo = null;
+        List<CourseInfo> courseInfos = null;
 
         //获取当前时间节次信息
 
@@ -146,10 +163,24 @@ public class AdminServiceImpl implements AdminService {
         WeekEnum weekDay = WeekEnum.getEnum(current.get(Calendar.DAY_OF_WEEK));
 
 
-        // TODO: 2017/5/22 如果找不到课程就抛出异常， 由全局的异常处理拦截
+        //如果找不到课程就抛出异常， 由全局的异常处理拦截
         SessionInfo sessionInfo = sessionInfoCustMapper.selectByTime(hour,min);
+        if (sessionInfo==null){
+            throw new WebException(BackstageException.CURRENT_IS_NOT_ALLOWED_CHECKIN);
+        }
 
-        courseInfo = courseInfoCustMapper.selectByTeaSesId(teacherId, sessionInfo.getSessionIndex(), weekDay.getName());
+        courseInfos = courseInfoCustMapper.selectByTeaSesId(teacherId, sessionInfo.getSessionIndex(), weekDay.getName());
+
+        List<String> classIds = new ArrayList<>();
+
+        courseInfos.forEach(courseInfo -> {
+            classIds.add(courseInfo.getClassName());
+        });
+
+
+        if (courseInfos.size()==0){
+            return null;
+        }
 
         /**
          * step 2、获取课程信息后新建一条考勤次序记录并返回考勤次序号
@@ -158,10 +189,88 @@ public class AdminServiceImpl implements AdminService {
 
         seqInfo.setTeacherId(teacherId);
         seqInfo.setStartTime(new Date());
-        seqInfo.setCourseId(courseInfo.getCourseId());
+        seqInfo.setCourseId(courseInfos.get(0).getCourseId());
+        seqInfo.setClassIds(JacksonUtil.listToJson(classIds));
 
-        seqInfoMapper.insertSelective(seqInfo);
+        seqInfoCustMapper.insertReKey(seqInfo);
 
-        return seqInfo;
+        return SeqDetialInfo.builder().seqInfo(seqInfo).courseName(courseInfos.get(0).getCourseName()).build();
+
+    }
+
+    /**
+     * 获取当前考勤队列
+     * @return
+     */
+    @Override
+    public RMap<Long,CheckinQueueInfo> getCheckinQueue(){
+
+
+        RMap<Long, CheckinQueueInfo> rMap = redissonClient
+                .getMap(redisPropertis.getCkeckinQueueKey());
+
+        //如果考勤队列不存在，则需要设置对列超时时间
+        if (!rMap.isExists()) {
+            rMap.expire(redisPropertis.getTimeWindows(), TimeUnit.MINUTES);
+        }
+
+
+        return rMap;
+
+    }
+
+    /**
+     * 解析考勤结果
+     * @param checkinCalculateResults
+     * @return
+     */
+    @Override
+    public String parseCheckinResult(List<CheckinCalculateResult> checkinCalculateResults) {
+        String format = "考勤统计信息：\n\n " +
+                "总数：%d \n " +
+                "正常：%d \n " +
+                "缺勤：%d \n " +
+                "请假：%d \n " +
+                "迟到：%d \n " +
+                "早退：%d";
+
+        int sum = 0, normal = 0, absence = 0, leave = 0, tardy = 0, late = 0;
+
+        if (checkinCalculateResults != null && checkinCalculateResults.size() != 0) {
+
+            for (CheckinCalculateResult checkinCalculateResult : checkinCalculateResults) {
+
+                CheckInResultEnum checkInResultEnum = null;
+
+                try {
+                    checkInResultEnum = CheckInResultEnum.getEnum(checkinCalculateResult.getCheckinResult());
+                } catch (Exception e) {
+                    log.info("获取考勤状态异常");
+                }
+                if (checkInResultEnum != null) {
+
+                    switch (checkInResultEnum) {
+                        case NORMAL:
+                            normal++;
+                            break;
+                        case LATE:
+                            late++;
+                            break;
+                        case TARDY:
+                            tardy++;
+                            break;
+                        case LEAVE:
+                            leave++;
+                            break;
+                        case ABSENCE:
+                            absence++;
+                            break;
+                    }
+                }
+            }
+
+        }
+
+        return String.format(format, checkinCalculateResults.size(), normal, absence, leave, late, tardy);
     }
 }

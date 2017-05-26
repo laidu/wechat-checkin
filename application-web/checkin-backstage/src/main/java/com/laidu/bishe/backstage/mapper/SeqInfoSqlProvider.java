@@ -25,6 +25,10 @@ public class SeqInfoSqlProvider {
             sql.VALUES("start_time", "#{startTime,jdbcType=TIMESTAMP}");
         }
         
+        if (record.getClassIds() != null) {
+            sql.VALUES("class_ids", "#{classIds,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
@@ -42,6 +46,10 @@ public class SeqInfoSqlProvider {
         
         if (record.getStartTime() != null) {
             sql.SET("start_time = #{startTime,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getClassIds() != null) {
+            sql.SET("class_ids = #{classIds,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id = #{id,jdbcType=BIGINT}");

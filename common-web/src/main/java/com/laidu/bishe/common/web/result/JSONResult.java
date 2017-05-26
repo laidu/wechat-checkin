@@ -17,9 +17,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created by cw on 15-11-20.
- */
 public class JSONResult extends Result<JSONObject> {
     private JSONResult(IErrorCode iErrorCode, boolean success, JSONObject data) {
         this(iErrorCode.getCode(), iErrorCode.getMessage(), success, data);

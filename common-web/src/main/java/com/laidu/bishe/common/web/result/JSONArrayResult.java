@@ -7,9 +7,6 @@ import com.laidu.bishe.utils.utils.JacksonUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-/**
- * Created by cw on 15-11-20.
- */
 public class JSONArrayResult extends Result<JSONArray> {
     private JSONArrayResult(IErrorCode iErrorCode, boolean success, JSONArray data) {
         this(iErrorCode.getCode(), iErrorCode.getMessage(),success,data);

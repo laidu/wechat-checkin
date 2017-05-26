@@ -9,8 +9,12 @@ public class CheckinDetailInfoSqlProvider {
         SQL sql = new SQL();
         sql.INSERT_INTO("checkin_detail_info");
         
-        if (record.getStuId() != null) {
-            sql.VALUES("stu_id", "#{stuId,jdbcType=BIGINT}");
+        if (record.getId() != null) {
+            sql.VALUES("id", "#{id,jdbcType=BIGINT}");
+        }
+        
+        if (record.getStudentId() != null) {
+            sql.VALUES("student_id", "#{studentId,jdbcType=BIGINT}");
         }
         
         if (record.getCheckinTime() != null) {
@@ -22,28 +26,65 @@ public class CheckinDetailInfoSqlProvider {
         }
         
         if (record.getCheckinType() != null) {
-            sql.VALUES("checkin_type", "#{checkinType,jdbcType=SMALLINT}");
+            sql.VALUES("checkin_type", "#{checkinType,jdbcType=VARCHAR}");
         }
         
         if (record.getIsSucc() != null) {
             sql.VALUES("is_succ", "#{isSucc,jdbcType=BIT}");
         }
         
+        if (record.getSeqId() != null) {
+            sql.VALUES("seq_id", "#{seqId,jdbcType=BIGINT}");
+        }
+        
         if (record.getCheckinResult() != null) {
-            sql.VALUES("checkin_result", "#{checkinResult,jdbcType=SMALLINT}");
+            sql.VALUES("checkin_result", "#{checkinResult,jdbcType=INTEGER}");
         }
         
         if (record.getCourseId() != null) {
             sql.VALUES("course_id", "#{courseId,jdbcType=BIGINT}");
         }
         
-        if (record.getSeqId() != null) {
-            sql.VALUES("seq_id", "#{seqId,jdbcType=BIGINT}");
+        return sql.toString();
+    }
+
+    public String updateByPrimaryKeySelective(CheckinDetailInfo record) {
+        SQL sql = new SQL();
+        sql.UPDATE("checkin_detail_info");
+        
+        if (record.getStudentId() != null) {
+            sql.SET("student_id = #{studentId,jdbcType=BIGINT}");
         }
         
-        if (record.getId() != null) {
-            sql.VALUES("id", "#{id,jdbcType=BIGINT}");
+        if (record.getCheckinTime() != null) {
+            sql.SET("checkin_time = #{checkinTime,jdbcType=TIMESTAMP}");
         }
+        
+        if (record.getProofPath() != null) {
+            sql.SET("proof_path = #{proofPath,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCheckinType() != null) {
+            sql.SET("checkin_type = #{checkinType,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIsSucc() != null) {
+            sql.SET("is_succ = #{isSucc,jdbcType=BIT}");
+        }
+        
+        if (record.getSeqId() != null) {
+            sql.SET("seq_id = #{seqId,jdbcType=BIGINT}");
+        }
+        
+        if (record.getCheckinResult() != null) {
+            sql.SET("checkin_result = #{checkinResult,jdbcType=INTEGER}");
+        }
+        
+        if (record.getCourseId() != null) {
+            sql.SET("course_id = #{courseId,jdbcType=BIGINT}");
+        }
+        
+        sql.WHERE("id = #{id,jdbcType=BIGINT}");
         
         return sql.toString();
     }

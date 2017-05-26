@@ -15,9 +15,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by cw on 15-11-24.
- */
 @ControllerAdvice
 @RequestMapping("/")
 @Slf4j

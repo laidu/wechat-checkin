@@ -12,13 +12,14 @@ public enum ClickMenuKeyEnum {
     VOICE_CHECKIN,//声纹签到
     FACE_CHECKIN,//刷脸签到
     LEAVE_CHECKIN,//请假
-    My_RECOD,//我的考勤记录
+    MY_RECOD,//我的考勤记录
     MY_STU_INFO,//我的信息
 
     START_CHECKIN,//开始考勤
     END_CHECKIN,//结束考勤
     VIEW_CHECKIN,//本次考勤统计
     RANDOM_CHECKIN_,//抽点
+    MY_COURSE_INFO,//我的课表
     MY_TEA_INFO,//我的信息
 
 }

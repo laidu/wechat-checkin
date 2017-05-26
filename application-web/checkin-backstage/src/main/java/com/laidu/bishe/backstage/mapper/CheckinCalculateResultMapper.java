@@ -19,12 +19,12 @@ public interface CheckinCalculateResultMapper {
     int deleteByPrimaryKey(Long id);
 
     @Insert({
-        "insert into checkin_calculate_result (id, cource_id, ",
-        "teacher_id, seq_start, ",
-        "seq_end, result)",
-        "values (#{id,jdbcType=BIGINT}, #{courceId,jdbcType=VARCHAR}, ",
-        "#{teacherId,jdbcType=BIGINT}, #{seqStart,jdbcType=BIGINT}, ",
-        "#{seqEnd,jdbcType=BIGINT}, #{result,jdbcType=VARCHAR})"
+        "insert into checkin_calculate_result (id, teacher_id, ",
+        "student_id, checkin_result, ",
+        "seq_id, cource_id)",
+        "values (#{id,jdbcType=BIGINT}, #{teacherId,jdbcType=BIGINT}, ",
+        "#{studentId,jdbcType=BIGINT}, #{checkinResult,jdbcType=INTEGER}, ",
+        "#{seqId,jdbcType=BIGINT}, #{courceId,jdbcType=BIGINT})"
     })
     int insert(CheckinCalculateResult record);
 
@@ -33,17 +33,17 @@ public interface CheckinCalculateResultMapper {
 
     @Select({
         "select",
-        "id, cource_id, teacher_id, seq_start, seq_end, result",
+        "id, teacher_id, student_id, checkin_result, seq_id, cource_id",
         "from checkin_calculate_result",
         "where id = #{id,jdbcType=BIGINT}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="cource_id", property="courceId", jdbcType=JdbcType.VARCHAR),
         @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT),
-        @Result(column="seq_start", property="seqStart", jdbcType=JdbcType.BIGINT),
-        @Result(column="seq_end", property="seqEnd", jdbcType=JdbcType.BIGINT),
-        @Result(column="result", property="result", jdbcType=JdbcType.VARCHAR)
+        @Result(column="student_id", property="studentId", jdbcType=JdbcType.BIGINT),
+        @Result(column="checkin_result", property="checkinResult", jdbcType=JdbcType.INTEGER),
+        @Result(column="seq_id", property="seqId", jdbcType=JdbcType.BIGINT),
+        @Result(column="cource_id", property="courceId", jdbcType=JdbcType.BIGINT)
     })
     CheckinCalculateResult selectByPrimaryKey(Long id);
 
@@ -52,11 +52,11 @@ public interface CheckinCalculateResultMapper {
 
     @Update({
         "update checkin_calculate_result",
-        "set cource_id = #{courceId,jdbcType=VARCHAR},",
-          "teacher_id = #{teacherId,jdbcType=BIGINT},",
-          "seq_start = #{seqStart,jdbcType=BIGINT},",
-          "seq_end = #{seqEnd,jdbcType=BIGINT},",
-          "result = #{result,jdbcType=VARCHAR}",
+        "set teacher_id = #{teacherId,jdbcType=BIGINT},",
+          "student_id = #{studentId,jdbcType=BIGINT},",
+          "checkin_result = #{checkinResult,jdbcType=INTEGER},",
+          "seq_id = #{seqId,jdbcType=BIGINT},",
+          "cource_id = #{courceId,jdbcType=BIGINT}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(CheckinCalculateResult record);

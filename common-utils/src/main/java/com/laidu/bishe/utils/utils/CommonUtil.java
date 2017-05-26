@@ -2,9 +2,6 @@ package com.laidu.bishe.utils.utils;
 
 import org.apache.commons.lang.StringUtils;
 
-/**
- * Created by chenwen on 16/11/9.
- */
 public class CommonUtil {
     /**
      * 头峰式转下划线

@@ -21,9 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by chenwen on 16/10/8.
- */
 @Slf4j
 public class JacksonUtil {
     public JacksonUtil() {

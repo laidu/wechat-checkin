@@ -5,9 +5,6 @@ import com.laidu.bishe.utils.exception.BaseException;
 
 import java.io.Serializable;
 
-/**
- * Created by cw on 16-1-7.
- */
 public class ErrorResult implements Serializable {
     private String code;
     private String message;

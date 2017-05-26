@@ -31,18 +31,8 @@
         },
         {
           "type": "click",
-          "name": "抽取20%",
-          "key": "random_checkin_20"
-        },
-        {
-          "type": "click",
           "name": "抽取30%",
           "key": "random_checkin_30"
-        },
-        {
-          "type": "click",
-          "name": "抽取50%",
-          "key": "random_checkin_50"
         },
         {
           "type": "click",
@@ -63,6 +53,11 @@
           "type": "click",
           "name": "我的信息",
           "key": "my_tea_info"
+        },
+        {
+          "type": "click",
+          "name": "我的课表",
+          "key": "my_course_info"
         }
       ]
     }

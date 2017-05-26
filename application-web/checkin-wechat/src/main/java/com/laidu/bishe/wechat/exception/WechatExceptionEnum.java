@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class WechatExceptionEnum implements IErrorCode {
 
 
+
     private String code;
     private String message;
 }

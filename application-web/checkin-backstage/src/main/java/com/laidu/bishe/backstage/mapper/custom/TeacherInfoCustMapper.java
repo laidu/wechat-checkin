@@ -20,14 +20,15 @@ public interface TeacherInfoCustMapper extends TeacherInfoMapper{
      */
     @Select({
             "select",
-            "teacher_id, teacher_name, wechat_id",
+            "teacher_id, teacher_name, wechat_id, register_time",
             "from teacher_info",
-            "where wechat_id = #{wechatId,jdbcType=VARCHAR}"
+            "where wechat_id = #{teaWechatId,jdbcType=VARCHAR}"
     })
     @Results({
-            @Result(column="teacher_id", property="teacherId", jdbcType= JdbcType.BIGINT, id=true),
+            @Result(column="teacher_id", property="teacherId", jdbcType=JdbcType.BIGINT, id=true),
             @Result(column="teacher_name", property="teacherName", jdbcType=JdbcType.VARCHAR),
-            @Result(column="wechat_id", property="wechatId", jdbcType=JdbcType.VARCHAR)
+            @Result(column="wechat_id", property="wechatId", jdbcType=JdbcType.VARCHAR),
+            @Result(column="register_time", property="registerTime", jdbcType=JdbcType.TIMESTAMP)
     })
     TeacherInfo selectByWechatId(String wechatId);
 }

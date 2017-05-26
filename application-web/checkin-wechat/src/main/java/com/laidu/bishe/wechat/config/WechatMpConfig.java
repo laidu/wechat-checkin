@@ -14,6 +14,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+
 /**
  *
  * Created by laidu on 2017/5/11.
@@ -60,6 +62,7 @@ public class WechatMpConfig {
         configStorage.setSecret(this.wechatProperties.getSecret());
         configStorage.setToken(this.wechatProperties.getToken());
         configStorage.setAesKey(this.wechatProperties.getAesKey());
+        configStorage.setTmpDirFile(new File(wechatProperties.getTmpDirFile()));
         return configStorage;
     }
 

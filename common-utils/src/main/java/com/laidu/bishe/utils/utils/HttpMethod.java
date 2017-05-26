@@ -1,8 +1,5 @@
 package com.laidu.bishe.utils.utils;
 
-/**
- * Created by chenwen on 16/9/21.
- */
 public class HttpMethod {
     public HttpMethod() {
     }

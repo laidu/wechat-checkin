@@ -2,10 +2,6 @@ package com.laidu.bishe.utils.utils;
 
 import java.util.Collection;
 import java.util.Map;
-
-/**
- * Created by chenwen on 16/11/16.
- */
 public class ObjectUtil {
 
     /**

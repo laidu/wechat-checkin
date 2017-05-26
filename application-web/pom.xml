@@ -24,12 +24,12 @@
 
         <dependency>
             <groupId>com.laidu.bishe</groupId>
-            <artifactId>common-web</artifactId>
+            <artifactId>queue</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.laidu.bishe</groupId>
-            <artifactId>mybatis</artifactId>
+            <artifactId>common-web</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

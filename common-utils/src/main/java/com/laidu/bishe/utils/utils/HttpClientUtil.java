@@ -23,9 +23,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Base64;
 
-/**
- * Created by huangpin on 16/11/1.
- */
 @Slf4j
 public class HttpClientUtil {
 

@@ -21,9 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.UUID;
 
-/**
- * Created by cw on 15-11-19.
- */
 @Component
 @Slf4j
 @Order(1)
