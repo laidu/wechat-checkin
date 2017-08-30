@@ -15,9 +15,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @ControllerAdvice
 @RequestMapping("/")
-@Slf4j
 public class GlobalController {
     @RequestMapping(value = "/health", method = RequestMethod.GET)
     @ResponseBody

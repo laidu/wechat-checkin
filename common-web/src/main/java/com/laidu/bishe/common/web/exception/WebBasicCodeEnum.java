@@ -15,7 +15,7 @@ public enum WebBasicCodeEnum implements IErrorCode {
     ;
 
     @Getter
-    private final String message;
+    private String message;
 
     @Override
     public String getCode() {

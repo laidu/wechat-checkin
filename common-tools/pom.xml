@@ -16,6 +16,7 @@
         <module>mybatis</module>
         <module>zookeeper</module>
         <module>nosql</module>
+        <module>queue</module>
     </modules>
 
     <dependencies>
